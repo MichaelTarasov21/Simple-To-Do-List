@@ -4,7 +4,9 @@
   "description": "A simple to-do list program that I am making as an entry point into backend development ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+    "serve": "node src/index.js",
+    "compile": "node node_modules/sass/sass.js src/public/StyleSheets/SCSS/style.scss:src/public/StyleSheets/CSS/style.css",
+    "start": "npm run compile && npm run serve"
   },
   "repository": {
     "type": "git",
@@ -21,7 +23,8 @@
   "homepage": "https://github.com/MichaelTarasov21/To-Do-List#readme",
   "dependencies": {
     "dotenv": "^10.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "sass": "^1.43.5"
   },
   "devDependencies": {
     "eslint": "^8.3.0"
