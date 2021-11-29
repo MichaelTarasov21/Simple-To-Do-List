@@ -1,3 +1,25 @@
+$app-background: #99eeff;
 body {
-	background-color: aquamarine;
+	background-color: $app-background;
+}
+#formbox {
+	$width: 20vw;
+	width: $width;
+	height: auto;
+
+	position: relative;
+	top: 50vh;
+	transform: translateY(-50%);
+	left: calc((100vw - $width) / 2);
+
+	border-color: white;
+	border-radius: 2px;
+	border-style: solid;
+
+	input {
+		$inputsize: 10vw;
+		width: $inputsize;
+		position: relative;
+		left: calc(($width - $inputsize) / 2);
+	}
 }
