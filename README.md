@@ -10,3 +10,7 @@ To run:
 ```
 npm start
 ```
+.env:
+```
+PORT = Port_To_Run_On
+```
