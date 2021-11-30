@@ -41,10 +41,23 @@ body {
 	border-radius: 2px;
 	border-style: solid;
 
+	font-size: 200%;
+
+	label {
+		//Allign label with input margins
+		margin-top: .75em;
+		margin-bottom: .75em;
+		margin-left: .5em;
+		margin-right: .5em;
+
+		// Aligns input boxes against the formbox
+		position: absolute;
+	}
 	input {
 		$inputsize: 10vw;
 		width: $inputsize;
 		position: relative;
-		left: calc(($width - $inputsize) / 2);
+		right: calc(($width - $inputsize) / -2);
+		margin: 1em;
 	}
 }
