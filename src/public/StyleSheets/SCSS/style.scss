@@ -2,6 +2,20 @@ $app-background: #99eeff;
 body {
 	background-color: $app-background;
 }
+
+#logo {
+	display: block;
+	width: 100%;
+	text-align: center;
+
+	font-size: 500%;
+	height: 1em;
+
+	img {
+		height: 1.5em;
+	}
+}
+
 #formbox {
 	$width: 20vw;
 	width: $width;
