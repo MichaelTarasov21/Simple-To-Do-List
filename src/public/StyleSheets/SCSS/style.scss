@@ -1,3 +1,10 @@
+@font-face {
+	font-family: "candy_butterflyregular";
+	src: url("/Assets/Fonts/hello_giorgina.woff2") format("woff2"), url("/Assets/Fonts/hello_giorgina.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+}
+
 html {
 	font-size: 62.5%;
 	font-family: "Times New Roman", Times, serif;
@@ -19,11 +26,15 @@ body {
 	width: 100%;
 	text-align: center;
 
+	font-family: "candy_butterflyregular";
 	font-size: 500%;
 	height: 1em;
 
 	img {
-		height: 1.5em;
+		height: 2em;
+
+		position: relative;
+		top: .75em;
 	}
 }
 
@@ -45,10 +56,10 @@ body {
 
 	label {
 		//Allign label with input margins
-		margin-top: .75em;
-		margin-bottom: .75em;
-		margin-left: .5em;
-		margin-right: .5em;
+		margin-top: 0.75em;
+		margin-bottom: 0.75em;
+		margin-left: 0.5em;
+		margin-right: 0.5em;
 
 		// Aligns input boxes against the formbox
 		position: absolute;
