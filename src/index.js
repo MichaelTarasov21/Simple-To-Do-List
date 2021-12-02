@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const app = express();
-const mssql = require("mssql");
+const mysql = require("mysql");
 
 let port = 8080;
 if (process.env.PORT) {
