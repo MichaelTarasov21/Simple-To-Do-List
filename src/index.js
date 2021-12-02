@@ -1,11 +1,12 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
-const internal = require("stream");
 const app = express();
+const mssql = require("mssql");
+
 let port = 8080;
 if (process.env.PORT) {
-	const port = process.env.PORT;
+	port = process.env.PORT;
 }
 
 app.use(express.static(path.join(__dirname, "public")));
