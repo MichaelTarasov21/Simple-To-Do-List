@@ -1,8 +1,14 @@
 require("dotenv").config();
 const express = require("express");
-const path = require("path");
 const app = express();
-const mysql = require("mysql");
+const path = require("path");
+const sql = require("./connectdatabase.js");
+const checkDatabse = require("./checkdatabase.js");
+
+sql.connect(function (err) {
+	if (err) throw err;
+	console.log("SQL Connected!");
+});
 
 let port = 8080;
 if (process.env.PORT) {
