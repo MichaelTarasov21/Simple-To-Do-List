@@ -99,8 +99,7 @@ function createTables(sql, database_name) {
 			username VARCHAR(255) NOT NULL,
 			real_name VARCHAR(255) NULL,
 			password VARCHAR(255) NOT NULL, 
-			salt CHAR(29) NOT NULL, 
-			iterations TINYINT NOT NULL)`,
+			salt CHAR(29) NOT NULL)`,
 			function (err) {
 				if (err) throw err;
 			}
