@@ -93,7 +93,8 @@ function createTables(sql, database_name) {
 		console.log(`Creating tables in ${database_name}...`);
 		sql.query(
 			`CREATE TABLE users (
-			userid INT AUTO_INCREMENT PRIMARY KEY NOT NULL, 
+			userid INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+			administrator BOOLEAN NOT NULL,
 			email nVARCHAR(255) NULL,
 			username VARCHAR(255) NOT NULL,
 			real_name VARCHAR(255) NULL,
