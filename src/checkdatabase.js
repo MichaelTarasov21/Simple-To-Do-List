@@ -29,12 +29,12 @@ function checkDatabse(sql, database_name = String, expected_tables = Array) {
 }
 
 function overwriteDatabase(sql, database_name, tables) {
-	rl.question("Would you like to overwrite the databe? (y/N)", function (overwrite) {
+	rl.question("Would you like to overwrite the databe? (y/N) ", function (overwrite) {
 		if (overwrite === "" || overwrite.toLowerCase() === "n" || overwrite.toLowerCase() === "no") {
 			exit(1);
 		} else if (overwrite.toLowerCase() === "y" || overwrite.toLowerCase() === "yes") {
 			function confirm() {
-				rl.question("Are you certain that you want to proceed? (y/N)", function (confirmation) {
+				rl.question("Are you certain that you want to proceed? (y/N) ", function (confirmation) {
 					if (confirmation === "" || confirmation.toLowerCase() === "n" || confirmation.toLowerCase() === "no") {
 						exit(1);
 					} else if (confirmation.toLowerCase() === "y" || confirmation.toLowerCase() === "yes") {
