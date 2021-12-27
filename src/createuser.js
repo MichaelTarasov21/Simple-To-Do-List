@@ -12,7 +12,7 @@ function createUser(sql, username, password, admin = false) {
 		bcrypt.hash(password, salt, function (err, hash) {
 			// Store hash in your password DB.
 			console.log(hash)
-			sql.query(`INSERT INTO users(administrator, username, password, salt) VALUES (${admin}, "${username}", "${hash}", "${salt}")`);
+			sql.query(`INSERT INTO users(administrator, username, password) VALUES (${admin}, "${username}", "${hash}")`);
 		});
 	});
 }
