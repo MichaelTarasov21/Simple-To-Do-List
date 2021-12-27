@@ -13,4 +13,11 @@ npm start
 .env:
 ```
 PORT = Port_To_Run_On
+SQLUSER = "sql_username"
+SQLPASSWORD = "sql_password"
+DATABASE = "database_name"
+HASHSTRENGTH = 12
 ```
+Note on hashstrength:
+Larger values slow down hash computation but improves the randomness of salt.
+A good default is 12
