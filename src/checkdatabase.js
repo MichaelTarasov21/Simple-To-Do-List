@@ -1,6 +1,7 @@
 const { exit } = require("process");
 const readline = require("readline");
 const sql = require("./connectdatabase.js");
+const createUser = require("./createuser.js");
 const rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
@@ -131,7 +132,44 @@ function createTables(sql, database_name) {
 			}
 		);
 		console.log("Sucessfully created tables");
+		setupAdmin(sql);
 	});
 }
+
+function setupAdmin(sql) {
+	rl.question("Would you like to create an admin account now? (Y/n) ", function (customise) {
+		if (customise.toLowerCase() === "n" || customise.toLowerCase() === "no") {
+			console.log("Creating an administrator account with username administrator and password ChangeMe!");
+			console.log("Log in to the web interface to change these");
+			createUser(sql, "administrator", "ChangeMe!", true);
+		} else if (customise === "" || customise.toLowerCase() === "y" || customise.toLowerCase() === "yes") {
+			function getUsername() {
+				rl.question("Username: ", function (username) {
+					if (username === "") {
+						console.log("Username can not be blank");
+						getUsername();
+					} else {
+						function getPassword() {
+							rl.question("Password: ", function (password) {
+								if (password === "") {
+									console.log("Password can not be blank");
+									getPassword();
+								} else {
+									createUser(sql, username, password, true);
+								}
+							});
+						}
+						getPassword();
+					}
+				});
+			}
+			getUsername();
+		} else {
+			console.log("Invalid input");
+			setupAdmin(sql);
+		}
+	});
+}
+
 
 module.exports = checkDatabse;
