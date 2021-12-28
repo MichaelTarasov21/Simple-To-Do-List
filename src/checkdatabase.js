@@ -1,11 +1,6 @@
 const { exit } = require("process");
-const readline = require("readline");
-const sql = require("./connectdatabase.js");
-const createUser = require("./createuser.js");
-const rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout,
-});
+const createTables = require("./createtables");
+const rl = require("./readline");
 
 function checkDatabse(sql, database_name = String, expected_tables = Array) {
 	// Check if a given database exists and attempt to create it if it doesn't
@@ -29,6 +24,26 @@ function checkDatabse(sql, database_name = String, expected_tables = Array) {
 	});
 }
 
+function checkDatabseTables(sql, database_name = String, expected_tables = Array) {
+	sql.query(`SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='${database_name}'`, function (err, result) {
+		if (err) throw err;
+		if (result.length === 0) {
+			createTables(sql, database_name);
+		} else {
+			let tables = [];
+			result.forEach((element) => {
+				tables.push(element.TABLE_NAME);
+			});
+			tables.sort();
+			expected_tables.sort();
+			if (tables.toString() !== expected_tables.toString()) {
+				console.log(`It appears that the database named ${database_name} is already used by another application. Since this app is in Alpha it is also possible that an update changed the data structure.`);
+				overwriteDatabase(sql, database_name, tables);
+			}
+		}
+	});
+}
+
 function overwriteDatabase(sql, database_name, tables) {
 	rl.question("Would you like to overwrite the databe? (y/N) ", function (overwrite) {
 		if (overwrite === "" || overwrite.toLowerCase() === "n" || overwrite.toLowerCase() === "no") {
@@ -39,7 +54,6 @@ function overwriteDatabase(sql, database_name, tables) {
 					if (confirmation === "" || confirmation.toLowerCase() === "n" || confirmation.toLowerCase() === "no") {
 						exit(1);
 					} else if (confirmation.toLowerCase() === "y" || confirmation.toLowerCase() === "yes") {
-						rl.close();
 						console.log("Deleting all tables in database. Ctrl+C now if this is not intended");
 						setTimeout(function () {
 							sql.query(`USE ${database_name}`, function (err) {
@@ -67,108 +81,5 @@ function overwriteDatabase(sql, database_name, tables) {
 		}
 	});
 }
-
-function checkDatabseTables(sql, database_name = String, expected_tables = Array) {
-	sql.query(`SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='${database_name}'`, function (err, result) {
-		if (err) throw err;
-		if (result.length === 0) {
-			createTables(sql, database_name);
-		} else {
-			let tables = [];
-			result.forEach((element) => {
-				tables.push(element.TABLE_NAME);
-			});
-			tables.sort();
-			expected_tables.sort();
-			if (tables.toString() !== expected_tables.toString()) {
-				console.log(`It appears that the database named ${database_name} is already used by another application. Since this app is in Alpha it is also possible that an update changed the data structure.`);
-				overwriteDatabase(sql, database_name, tables);
-			}
-		}
-	});
-}
-
-function createTables(sql, database_name) {
-	sql.query(`USE ${database_name}`, function (err) {
-		if (err) throw err;
-		console.log(`Creating tables in ${database_name}...`);
-		sql.query(
-			`CREATE TABLE users (
-			userid INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-			administrator BOOLEAN NOT NULL,
-			email nVARCHAR(255) NULL,
-			username VARCHAR(255) NOT NULL,
-			real_name VARCHAR(255) NULL,
-			password VARCHAR(255) NOT NULL)`,
-			function (err) {
-				if (err) throw err;
-			}
-		);
-		sql.query(
-			`CREATE TABLE sessions (
-			sessionid INT AUTO_INCREMENT PRIMARY KEY NOT NULL, 
-			userid INT NOT NULL, 
-			cookie VARCHAR(1000) NOT NULL, 
-			access_date DATE NOT NULL,
-			FOREIGN KEY (userid) REFERENCES users(userid))`,
-			function (err) {
-				if (err) throw err;
-			}
-		);
-		sql.query(
-			`CREATE TABLE tasks (
-			noteid INT AUTO_INCREMENT PRIMARY KEY NOT NULL, 
-			userid INT NOT NULL, 
-			position INT NULL, 
-			message VARCHAR(1000) NOT NULL, 
-			completed BOOLEAN NOT NULL, 
-			completed_date DATE NULL, 
-			expiration_date DATE NULL, 
-			flag CHAR(1) NULL,
-			FOREIGN KEY (userid) REFERENCES users(userid))`,
-			function (err) {
-				if (err) throw err;
-			}
-		);
-		console.log("Sucessfully created tables");
-		setupAdmin(sql);
-	});
-}
-
-function setupAdmin(sql) {
-	rl.question("Would you like to create an admin account now? (Y/n) ", function (customise) {
-		if (customise.toLowerCase() === "n" || customise.toLowerCase() === "no") {
-			console.log("Creating an administrator account with username administrator and password ChangeMe!");
-			console.log("Log in to the web interface to change these");
-			createUser(sql, "administrator", "ChangeMe!", true);
-		} else if (customise === "" || customise.toLowerCase() === "y" || customise.toLowerCase() === "yes") {
-			function getUsername() {
-				rl.question("Username: ", function (username) {
-					if (username === "") {
-						console.log("Username can not be blank");
-						getUsername();
-					} else {
-						function getPassword() {
-							rl.question("Password: ", function (password) {
-								if (password === "") {
-									console.log("Password can not be blank");
-									getPassword();
-								} else {
-									createUser(sql, username, password, true);
-								}
-							});
-						}
-						getPassword();
-					}
-				});
-			}
-			getUsername();
-		} else {
-			console.log("Invalid input");
-			setupAdmin(sql);
-		}
-	});
-}
-
 
 module.exports = checkDatabse;
