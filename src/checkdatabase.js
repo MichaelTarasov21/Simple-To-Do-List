@@ -11,7 +11,7 @@ function checkDatabse(sql, database_name = String, expected_tables = Array) {
 			sql.query(`CREATE DATABASE ${database_name}`, function (err) {
 				// This is a common and simple error so it should be explained more clearly and should terminate the program more quietly
 				if (err.code === "ER_DBACCESS_DENIED_ERROR") {
-					console.log("It seems you dont havCritical errore permission to create a database as the user that is making this query. Please change your credentials to a user that can create a database or manually create a database named " + database_name);
+					console.log("It seems you dont have permission to create a database as the user that is making this query. Please change your credentials to a user that can create a database or manually create a database named " + database_name);
 					exit(1);
 				}
 				if (err) throw err;
