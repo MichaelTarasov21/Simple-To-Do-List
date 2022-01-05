@@ -9,8 +9,8 @@ function createTables(sql, database_name) {
 			userid INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 			administrator BOOLEAN NOT NULL,
 			email nVARCHAR(255) NULL,
-			username VARCHAR(255) NOT NULL,
-			real_name VARCHAR(255) NULL,
+			username nVARCHAR(255) NOT NULL,
+			real_name nVARCHAR(255) NULL,
 			password VARCHAR(255) NOT NULL)`,
 			function (err) {
 				if (err) throw err;
@@ -21,7 +21,7 @@ function createTables(sql, database_name) {
 			sessionid INT AUTO_INCREMENT PRIMARY KEY NOT NULL, 
 			userid INT NOT NULL, 
 			cookie VARCHAR(1000) NOT NULL, 
-			access_date DATE NOT NULL,
+			last_access DATETIME NOT NULL,
 			FOREIGN KEY (userid) REFERENCES users(userid))`,
 			function (err) {
 				if (err) throw err;
@@ -32,11 +32,11 @@ function createTables(sql, database_name) {
 			noteid INT AUTO_INCREMENT PRIMARY KEY NOT NULL, 
 			userid INT NOT NULL, 
 			position INT NULL, 
-			message VARCHAR(1000) NOT NULL, 
+			message nVARCHAR(1000) NOT NULL, 
 			completed BOOLEAN NOT NULL, 
 			completed_date DATE NULL, 
 			expiration_date DATE NULL, 
-			flag CHAR(1) NULL,
+			flag nCHAR(1) NULL,
 			FOREIGN KEY (userid) REFERENCES users(userid))`,
 			function (err) {
 				if (err) throw err;
