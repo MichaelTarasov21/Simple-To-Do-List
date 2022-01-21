@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const path = require("path");
 const sql = require("./connectdatabase.js");
 const checkDatabse = require("./checkdatabase.js");
@@ -30,6 +31,7 @@ app.use(
 		extended: true,
 	})
 );
+app.use(cookieParser());
 
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}!`);
