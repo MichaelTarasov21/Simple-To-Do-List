@@ -7,21 +7,35 @@ let database_name = "To_Do_List";
 if (process.env.DATABASE) {
 	database_name = process.env.DATABASE;
 }
-
-function setCookie(response, res) {
+function formatDate() {
+	//Formats the date for use in sql
+	const date = new Date();
+	const year = date.getFullYear();
+	const month = date.getMonth();
+	const day = date.getDate();
+	const hour = date.getHours();
+	const minute = date.getMinutes();
+	const second = date.getSeconds();
+	return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+}
+function setCookie(response, res, userid) {
 	// Generates a cookie, checks to make sure it is unique, then sends it back to the browser as a session cookie
 	const cookie = mysql.escape(generateCookie());
-	sql.query(`SELECT * FROM sessions WHERE cookie="${cookie}"`, function (err, result) {
+	sql.query(`SELECT * FROM sessions WHERE cookie=${cookie}`, function (err, result) {
 		if (err) {
 			console.log(err);
 			res.send(response);
 			return;
 		}
 		if (result[0] !== undefined) {
-			setCookie(response, res);
+			setCookie(response, res, userid);
 		} else {
 			response.status = "Success";
-			response.cookie = cookie;
+			response.cookie = cookie.split("'")[1]; // The cookie string is surrounded by single quotes. These are not necessary.
+			const date = formatDate();
+
+			sql.query(`INSERT INTO sessions(userid, cookie, last_access) VALUES (${userid}, ${cookie}, "${date}")`);
+			
 			res.send(response);
 		}
 	});
@@ -32,7 +46,7 @@ function login(data, res) {
 	const password = String(data.body.password);
 	const response = {
 		status: "Failed",
-		cookie: "",
+		cookie: ""
 	};
 
 	sql.query(`USE ${database_name}`, function (err) {
@@ -54,7 +68,7 @@ function login(data, res) {
 			const hash = result.password;
 			bcrypt.compare(password, hash, function (err, result) {
 				if (result) {
-					setCookie(response, res);
+					setCookie(response, res, id);
 				} else {
 					res.send(response);
 				}
