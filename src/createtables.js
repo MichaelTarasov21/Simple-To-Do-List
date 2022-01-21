@@ -1,9 +1,11 @@
+const sql = require("./connectdatabase.js");
+const config = require("./config.js")
 const setupAdmin = require("./setupadmin");
 
-function createTables(sql, database_name) {
-	sql.query(`USE ${database_name}`, function (err) {
+function createTables() {
+	sql.query(`USE ${config.database_name}`, function (err) {
 		if (err) throw err;
-		console.log(`Creating tables in ${database_name}...`);
+		console.log(`Creating tables in ${config.database_name}...`);
 		sql.query(
 			`CREATE TABLE users (
 			userid INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -43,7 +45,7 @@ function createTables(sql, database_name) {
 			}
 		);
 		console.log("Sucessfully created tables");
-		setupAdmin(sql);
+		setupAdmin();
 	});
 }
 

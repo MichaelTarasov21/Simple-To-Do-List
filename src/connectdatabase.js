@@ -1,22 +1,10 @@
 const mysql = require("mysql");
-
-let sqlhost = "localhost";
-if (process.env.SQLHOST) {
-	sqlhost = process.env.SQLHOST;
-}
-let sqluser = "username";
-if (process.env.SQLUSER) {
-	sqluser = process.env.SQLUSER;
-}
-let sqlpassword = "";
-if (process.env.SQLPASSWORD) {
-	sqlpassword = process.env.SQLPASSWORD;
-}
+const config = require("./config.js");
 
 const sql = mysql.createConnection({
-	host: sqlhost,
-	user: sqluser,
-	password: sqlpassword,
+	host: config.sqlhost,
+	user: config.sqluser,
+	password: config.sqlpassword,
 });
 
 module.exports = sql;

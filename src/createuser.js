@@ -1,16 +1,12 @@
 const bcrypt = require("bcrypt");
 const mysql = require("mysql");
+const sql = require("./connectdatabase.js");
+const config = require("./config.js");
 
-function createUser(sql, username, password, admin = false) {
+function createUser(username, password, admin = false) {
 	username = mysql.escape(username);
 
-	let saltRounds;
-	if (process.HASHSTRENGTH) {
-		saltRounds = int(process.HASHSTRENGTH);
-	} else {
-		saltRounds = 12;
-	}
-	saltRounds = 2 ^ saltRounds;
+	saltRounds = 2 ^ config.saltRounds;
 	bcrypt.genSalt(saltRounds, function (err, salt) {
 		if (err) throw err;
 		bcrypt.hash(password, salt, function (err, hash) {

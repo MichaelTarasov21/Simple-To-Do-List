@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+const config = require("./config.js");
 const sql = require("./connectdatabase.js");
 
 function sendnotes(request, res) {
@@ -9,7 +10,7 @@ function sendnotes(request, res) {
 		status: "Error",
 		notes: [],
 	};
-	sql.query(`USE ${database_name}`, function (err, result) {
+	sql.query(`USE ${config.database_name}`, function (err, result) {
 		if (err) throw err;
 		sql.query(`SELECT * FROM sessions WHERE cookie="${cookie}"`, function (err, result) {
 			if (err) {

@@ -1,12 +1,9 @@
 const bcrypt = require("bcrypt");
 const mysql = require("mysql");
 const sql = require("./connectdatabase.js");
+const config = require("./config.js");
 const generateCookie = require("./gencookie.js");
 
-let database_name = "To_Do_List";
-if (process.env.DATABASE) {
-	database_name = process.env.DATABASE;
-}
 function formatDate() {
 	//Formats the date for use in sql
 	const date = new Date();
@@ -35,7 +32,7 @@ function setCookie(response, res, userid) {
 			const date = formatDate();
 
 			sql.query(`INSERT INTO sessions(userid, cookie, last_access) VALUES (${userid}, ${cookie}, "${date}")`);
-			
+
 			res.send(response);
 		}
 	});
@@ -46,10 +43,10 @@ function login(data, res) {
 	const password = String(data.body.password);
 	const response = {
 		status: "Failed",
-		cookie: ""
+		cookie: "",
 	};
 
-	sql.query(`USE ${database_name}`, function (err) {
+	sql.query(`USE ${config.database_name}`, function (err) {
 		if (err) throw err;
 		sql.query(`SELECT * FROM users WHERE username="${username}"`, function (err, result) {
 			if (err) {
