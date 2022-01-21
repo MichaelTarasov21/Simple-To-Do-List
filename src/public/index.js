@@ -11,14 +11,15 @@ function login() {
 
 	xhttp.open("POST", "/login", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send(`username=${username}&password=${password}`);
 	xhttp.onreadystatechange = process_result;
+	xhttp.send(`username=${username}&password=${password}`);
 }
 function process_result() {
 	if (this.readyState == 4 && this.status == 200) {
 		const response = JSON.parse(this.responseText);
 		if (response.status === "Success") {
-			alert("YOU Logged In");
+			document.cookie = `session=${response.cookie}; SameSite=strict;max-age=${60 * 60 * 6}`;
+			window.location.replace(window.location.href + "notes.html");
 		} else {
 			failedLogin();
 		}
