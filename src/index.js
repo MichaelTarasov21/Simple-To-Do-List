@@ -4,17 +4,13 @@ const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const path = require("path");
-const sql = require("./connectdatabase.js");
 const config = require("./config.js");
 const checkDatabse = require("./checkdatabase.js");
 const login = require("./login.js");
 const sendnotes = require("./sendnotes.js");
 
-sql.connect(function (err) {
-	if (err) throw err;
-	const tables = ["sessions", "tasks", "users"];
-	checkDatabse(tables);
-});
+const tables = ["sessions", "tasks", "users"];
+checkDatabse(tables);
 
 app.use(express.static(path.join(__dirname, "public")));
 

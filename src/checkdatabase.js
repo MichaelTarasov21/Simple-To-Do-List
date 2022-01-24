@@ -1,11 +1,22 @@
+const mysql = require("mysql");
 const { exit } = require("process");
 const createTables = require("./createtables");
 const rl = require("./readline");
-const sql = require("./connectdatabase.js");
 const config = require("./config.js");
+
+const sql = mysql.createConnection({
+	host: config.sqlhost,
+	user: config.sqluser,
+	password: config.sqlpassword,
+});
 
 function checkDatabse(expected_tables = Array) {
 	// Check if a given database exists and attempt to create it if it doesn't
+	sql.connect(function (err) {
+		if (err) {
+			throw err.stack;
+		}
+	});
 	sql.query(`SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = "${config.database_name}"`, function (err, result) {
 		if (err) throw err;
 		if (result == "") {
@@ -30,7 +41,7 @@ function checkDatabseTables(expected_tables = Array) {
 	sql.query(`SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='${config.database_name}'`, function (err, result) {
 		if (err) throw err;
 		if (result.length === 0) {
-			createTables();
+			sql.end(createTables);
 		} else {
 			let tables = [];
 			result.forEach((element) => {
@@ -66,7 +77,7 @@ function overwriteDatabase(tables) {
 										console.log(`Dropped ${table}`);
 									});
 								});
-								createTables();
+								sql.end(createTables);
 							});
 						}, 3000);
 					} else {
