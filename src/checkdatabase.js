@@ -58,7 +58,7 @@ function checkDatabseTables(expected_tables = Array) {
 }
 
 function overwriteDatabase(tables) {
-	rl.question("Would you like to overwrite the databe? (y/N) ", function (overwrite) {
+	rl.question("Would you like to overwrite the datbase? (y/N) ", function (overwrite) {
 		if (overwrite === "" || overwrite.toLowerCase() === "n" || overwrite.toLowerCase() === "no") {
 			exit(1);
 		} else if (overwrite.toLowerCase() === "y" || overwrite.toLowerCase() === "yes") {
