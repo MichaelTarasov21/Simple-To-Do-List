@@ -12,7 +12,7 @@ function createUser(username, password, admin = false) {
 
 	username = mysql.escape(username);
 
-	saltRounds = 2 ^ config.saltRounds;
+	saltRounds = config.saltRounds;
 	bcrypt.genSalt(saltRounds, function (err, salt) {
 		if (err) throw err;
 		bcrypt.hash(password, salt, function (err, hash) {
