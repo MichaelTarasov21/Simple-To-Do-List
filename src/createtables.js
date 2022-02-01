@@ -29,17 +29,6 @@ function createTables() {
 		}
 	);
 	sql.query(
-		`CREATE TABLE sessions (
-			sessionid INT AUTO_INCREMENT PRIMARY KEY NOT NULL, 
-			userid INT NOT NULL, 
-			cookie VARCHAR(1000) NOT NULL, 
-			last_access DATETIME NOT NULL,
-			FOREIGN KEY (userid) REFERENCES users(userid))`,
-		function (err) {
-			if (err) throw err;
-		}
-	);
-	sql.query(
 		`CREATE TABLE tasks (
 			noteid INT AUTO_INCREMENT PRIMARY KEY NOT NULL, 
 			userid INT NOT NULL, 

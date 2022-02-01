@@ -19,8 +19,14 @@ if (process.env.SQLPASSWORD) {
 	set_sqlpassword = process.env.SQLPASSWORD;
 }
 let set_saltRounds = 12;
-if (process.HASHSTRENGTH) {
-	set_saltRounds = parseInt(process.HASHSTRENGTH);
+if (process.env.HASHSTRENGTH) {
+	set_saltRounds = parseInt(process.env.HASHSTRENGTH);
+}
+
+if (process.env.COOKIESECRET) {
+	set_cookieSecret = process.env.COOKIESECRET;
+} else {
+	throw "Cookie secret must be set"
 }
 
 const config = {
@@ -30,6 +36,7 @@ const config = {
 	sqlpassword: set_sqlpassword,
 	database_name: set_database,
 	saltRounds: set_saltRounds,
+	cookieSecret: set_cookieSecret,
 };
 
 module.exports = config;

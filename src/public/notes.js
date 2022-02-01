@@ -8,14 +8,11 @@ function getnotes() {
 function add_notes() {
 	if (this.readyState == 4 && this.status == 200) {
 		const response = JSON.parse(this.responseText);
-		if (response.status === "Success"){
-			alert("Your notes have been found. In the next update they will be displayed")
-		} else if (response.status === "Invalid Cookie"){
-			alert("Your session has expired")
-			window.location.replace(window.location.href.replace("notes.html", "")) // Redirect to login page
+		if (response.status === "Success") {
+			alert("Your notes have been found. In the next update they will be displayed");
 		} else {
-			alert("An error has occured")
-			window.location.replace(window.location.href.replace("notes.html", "")) // Redirect to login page
+			alert("Your session has expired");
+			window.location.replace(window.location.href.replace("notes.html", "")); // Redirect to login page
 		}
 	}
 }
