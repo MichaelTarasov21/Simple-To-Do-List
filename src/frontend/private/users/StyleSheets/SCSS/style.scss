@@ -1,0 +1,114 @@
+@font-face {
+	font-family: "candy_butterflyregular";
+	src: url("/Assets/Fonts/hello_giorgina.woff2") format("woff2"), url("/Assets/Fonts/hello_giorgina.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+}
+
+html {
+	font-size: 62.5%;
+	font-family: "Times New Roman", Times, serif;
+	color: black;
+}
+html,
+body {
+	margin: 0;
+}
+
+$app-background: #99eeff;
+
+body {
+	background-color: $app-background;
+}
+
+#logo {
+	display: block;
+	width: 100%;
+	text-align: center;
+
+	font-family: "candy_butterflyregular";
+	font-size: 500%;
+	height: 1em;
+
+	img {
+		height: 2em;
+
+		position: relative;
+		top: 0.75em;
+	}
+}
+@keyframes fade_out {
+	0% {
+		height: 5vh;
+	}
+	100% {
+		height: 0vh;
+	}
+}
+#login_prompt {
+	$width: 20vw;
+	width: $width;
+	height: auto;
+	position: absolute;
+	left: calc((100vw - $width) / 2);
+	top: 50vh;
+	transform: translateY(-50%);
+}
+
+#failed_login {
+	background-color: rgba(255, 0, 0, 0.884);
+	$width: calc(100% + 2px * 2);
+	width: $width;
+	height: 5vh;
+
+	position: absolute;
+	top: -5vh;
+
+	text-align: center;
+	font-size: 200%;
+
+	span {
+		position: relative;
+		top: calc(50% - 0.5em);
+	}
+
+	animation-name: fade_out;
+	animation-duration: 0.5s;
+	animation-delay: 3s;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+	overflow: hidden;
+	display: none;
+}
+
+#formbox {
+	$width: 100%;
+	width: $width;
+	height: auto;
+
+	position: relative;
+
+	border-color: white;
+	border-radius: 2px;
+	border-style: solid;
+
+	font-size: 200%;
+
+	label {
+		//Allign label with input margins
+		margin-top: 0.75em;
+		margin-bottom: 0.75em;
+		margin-left: 0.5em;
+		margin-right: 0.5em;
+
+		// Aligns input boxes against the formbox
+		position: absolute;
+	}
+	input {
+		$inputsize: 10vw;
+		width: $inputsize;
+		position: relative;
+		right: calc(($width - $inputsize) / -2);
+		margin: 1em;
+	}
+}

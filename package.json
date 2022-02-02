@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "serve": "node src/index.js",
-    "compile": "node node_modules/sass/sass.js src/public/StyleSheets/SCSS/style.scss:src/public/StyleSheets/CSS/style.css",
-    "start": "npm run compile && npm run serve",
-    "devbuild": "node node_modules/sass/sass.js -w src/public/StyleSheets/SCSS/style.scss:src/public/StyleSheets/CSS/style.css",
+    "build": "node node_modules/sass/sass.js src/frontend/public/StyleSheets/SCSS:src/frontend/public/StyleSheets/CSS src/frontend/private/users/StyleSheets/SCSS:src/frontend/private/users/StyleSheets/CSS",
+    "start": "npm run build && npm run serve",
+    "devbuild": "node node_modules/sass/sass.js -w src/frontend/public/StyleSheets/SCSS:src/frontend/public/StyleSheets/CSS src/frontend/private/users/StyleSheets/SCSS:src/frontend/private/users/StyleSheets/CSS",
     "dev": "npm run devbuild & npm run serve"
   },
   "repository": {

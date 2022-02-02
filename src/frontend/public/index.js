@@ -18,7 +18,7 @@ function process_result() {
 	if (this.readyState == 4 && this.status == 200) {
 		const response = JSON.parse(this.responseText);
 		if (response.status === "Success") {
-			window.location.replace(window.location.href + "notes.html");
+			window.location.replace(window.location.href + "notes");
 		} else {
 			failedLogin();
 		}

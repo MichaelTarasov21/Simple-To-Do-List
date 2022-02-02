@@ -10,9 +10,6 @@ function add_notes() {
 		const response = JSON.parse(this.responseText);
 		if (response.status === "Success") {
 			alert("Your notes have been found. In the next update they will be displayed");
-		} else {
-			alert("Your session has expired");
-			window.location.replace(window.location.href.replace("notes.html", "")); // Redirect to login page
 		}
 	}
 }

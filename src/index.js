@@ -9,6 +9,7 @@ const config = require("./config.js");
 const checkDatabse = require("./checkdatabase.js");
 const login = require("./login.js");
 const sendnotes = require("./sendnotes.js");
+const hidePage = require("./secure_connect.js");
 
 const tables = ["sessions", "tasks", "users"];
 checkDatabse(tables);
@@ -25,14 +26,6 @@ const sessionStoreOptions = {
 };
 
 const sessionStore = new MySQLStore(sessionStoreOptions);
-
-app.use(express.static(path.join(__dirname, "public")));
-
-app.use(
-	bodyParser.urlencoded({
-		extended: true,
-	})
-);
 
 app.use(
 	session({
@@ -51,9 +44,18 @@ app.use(
 	})
 );
 
+app.use(
+	bodyParser.urlencoded({
+		extended: true,
+	})
+);
+
 app.listen(config.port, () => {
 	console.log(`Example app listening on port ${config.port}!`);
 });
+app.use("/", express.static(path.join(__dirname, "frontend/public")));
+app.use("/notes", hidePage);
+app.use("/notes", express.static(path.join(__dirname, "frontend/private/users")));
 
 app.post("/login", login);
 app.post("/notes", sendnotes); // Uses post to ensure a broswer sends the request and does not merely assume that it already has the results (code 304)
