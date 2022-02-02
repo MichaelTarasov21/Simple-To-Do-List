@@ -104,4 +104,4 @@ dist
 .tern-port
 
 #Sass generated files
-src/public/StyleSheets/CSS/
+**/CSS/
