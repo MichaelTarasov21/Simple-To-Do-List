@@ -23,7 +23,6 @@ function login(data, res) {
 	const password = String(data.body.password);
 	const response = {
 		status: "Failed",
-		cookie: "",
 	};
 	sql.query(`USE ${config.database_name}`, function (err) {
 		if (err) throw err;
