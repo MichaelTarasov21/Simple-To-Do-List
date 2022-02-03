@@ -9,6 +9,7 @@ const config = require("./config.js");
 const checkDatabse = require("./checkdatabase.js");
 const login = require("./login.js");
 const sendnotes = require("./sendnotes.js");
+const autoRoute = require("./autorouter.js");
 const hidePage = require("./secure_connect.js");
 
 const tables = ["sessions", "tasks", "users"];
@@ -53,7 +54,8 @@ app.use(
 app.listen(config.port, () => {
 	console.log(`Example app listening on port ${config.port}!`);
 });
-app.use("/", express.static(path.join(__dirname, "frontend/public")));
+app.get("/", autoRoute);
+app.use("/login", express.static(path.join(__dirname, "frontend/public")));
 app.use("/notes", hidePage);
 app.use("/notes", express.static(path.join(__dirname, "frontend/private/users")));
 
