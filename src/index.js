@@ -8,6 +8,7 @@ const config = require("./config.js");
 const login = require("./login.js");
 const sendnotes = require("./sendnotes.js");
 const autoRoute = require("./autorouter.js");
+const loginPage = require("./login_page.js");
 const userPage = require("./user_page.js");
 
 const sessionStoreOptions = {
@@ -50,6 +51,7 @@ app.listen(config.port, () => {
 	console.log(`Example app listening on port ${config.port}!`);
 });
 app.get("/", autoRoute);
+app.use("/login", loginPage);
 app.use("/login", express.static(path.join(__dirname, "frontend/public")));
 app.use("/notes", userPage);
 app.use("/notes", express.static(path.join(__dirname, "frontend/private/users")));
