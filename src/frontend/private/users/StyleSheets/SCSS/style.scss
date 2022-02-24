@@ -13,3 +13,67 @@ $app-background: #99eeff;
 body {
 	background-color: $app-background;
 }
+
+#page {
+	display: block;
+
+	$height: 80vh;
+	$width: 30vw;
+	height: $height;
+	width: $width;
+
+	position: relative;
+	left: calc((100vw - $width) / 2);
+	top: calc((100vh - $height) / 2);
+
+	background-color: white;
+	font-size: 250%;
+
+	.note {
+		display: block;
+		width: 100%;
+		overflow: wrap;
+		overflow-wrap: break-word;
+
+		border-color: rgb(113, 199, 228);
+		border-top: 0px;
+		border-left: 0px;
+		border-right: 0px;
+		border-style: solid;
+
+		padding: 1px;
+	}
+	#newnote {
+		input {
+			font-size: 65%;
+		}
+		button {
+			font-size: 65%;
+		}
+		#flag {
+			width: 1em; /* Technically not the right unit for width but it allows for the use of emojis better than ch */
+		}
+		#flag:focus {
+			outline: none;
+		}
+		#message {
+			width: calc(100% - 1em - 4ch - 3px);
+		}
+		#expireyLine {
+			font-size: 70%;
+			display: flex;
+			justify-content: space-evenly;
+		}
+		#dateInput {
+			visibility: hidden;
+		}
+		#expireyDate {
+			font-size: 90%;
+		}
+		#actionButtons {
+			margin-top: 2px;
+			display: flex;
+			justify-content: space-evenly;
+		}
+	}
+}
