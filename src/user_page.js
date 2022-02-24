@@ -1,4 +1,4 @@
-function hidePage(request, response, next) {
+function userPage(request, response, next) {
 	if (request.session.userid) {
 		next();
 	} else {
@@ -6,4 +6,4 @@ function hidePage(request, response, next) {
 	}
 }
 
-module.exports = hidePage;
+module.exports = userPage;

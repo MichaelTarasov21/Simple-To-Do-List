@@ -8,7 +8,7 @@ const config = require("./config.js");
 const login = require("./login.js");
 const sendnotes = require("./sendnotes.js");
 const autoRoute = require("./autorouter.js");
-const hidePage = require("./secure_connect.js");
+const userPage = require("./user_page.js");
 
 const sessionStoreOptions = {
 	host: config.sqlhost,
@@ -51,7 +51,7 @@ app.listen(config.port, () => {
 });
 app.get("/", autoRoute);
 app.use("/login", express.static(path.join(__dirname, "frontend/public")));
-app.use("/notes", hidePage);
+app.use("/notes", userPage);
 app.use("/notes", express.static(path.join(__dirname, "frontend/private/users")));
 
 app.post("/login", login);
