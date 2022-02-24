@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const { exit } = require("process");
 const createTables = require("./createtables");
+const setupAdmin = require("./setupadmin");
 const rl = require("./readline");
 const config = require("./config.js");
 
@@ -10,7 +11,7 @@ const sql = mysql.createConnection({
 	password: config.sqlpassword,
 });
 
-function checkDatabse(expected_tables = Array) {
+function checkDatabse() {
 	// Check if a given database exists and attempt to create it if it doesn't
 	sql.connect(function (err) {
 		if (err) {
@@ -23,21 +24,25 @@ function checkDatabse(expected_tables = Array) {
 			console.log("Database named " + config.database_name + " not found. Attempting to create.");
 			sql.query(`CREATE DATABASE ${config.database_name}`, function (err) {
 				// This is a common and simple error so it should be explained more clearly and should terminate the program more quietly
-				if (err.code === "ER_DBACCESS_DENIED_ERROR") {
-					console.log("It seems you dont have permission to create a database as the user that is making this query. Please change your credentials to a user that can create a database or manually create a database named " + config.database_name);
-					exit(1);
+				if (err) {
+					if (err.code === "ER_DBACCESS_DENIED_ERROR") {
+						console.log("It seems you dont have permission to create a database as the user that is making this query. Please change your credentials to a user that can create a database or manually create a database named " + config.database_name);
+						exit(1);
+					} else {
+						throw err;
+					}
 				}
-				if (err) throw err;
 				console.log("Database Created");
-				checkDatabseTables(expected_tables);
+				checkDatabseTables();
 			});
 		} else {
-			checkDatabseTables(expected_tables);
+			checkDatabseTables();
 		}
 	});
 }
 
-function checkDatabseTables(expected_tables = Array) {
+function checkDatabseTables() {
+	const expected_tables = ["tasks", "users"];
 	sql.query(`SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='${config.database_name}'`, function (err, result) {
 		if (err) throw err;
 		if (result.length === 0) {
@@ -47,11 +52,32 @@ function checkDatabseTables(expected_tables = Array) {
 			result.forEach((element) => {
 				tables.push(element.TABLE_NAME);
 			});
+			if (tables.includes("sessions")) {
+				// sessions is an automatically generated table that is created when the program runs. It is not created during setup and therefore should not be checked for when checking a setup.
+				if (tables.indexOf("sessions") === tables.length - 1) {
+					tables = tables.slice(0, tables.indexOf("sessions"));
+				} else {
+					tables = tables.slice(0, tables.indexOf("sessions"));
+					tables.concat(tables.slice(tables.indexOf("sessions") + 1));
+				}
+			}
+
 			tables.sort();
 			expected_tables.sort();
 			if (tables.toString() !== expected_tables.toString()) {
 				console.log(`It appears that the database named ${config.database_name} is already used by another application. Since this app is in Alpha it is also possible that an update changed the data structure.`);
 				overwriteDatabase(tables);
+			} else {
+				sql.query(`SELECT * FROM ${config.database_name}.users WHERE administrator="1"`, function (err, result) {
+					if (err) throw err.stack;
+					if (result.length === 0) {
+						sql.end(setupAdmin);
+					} else {
+						console.log("All tables are present. It appears that setup has already been completed.");
+						sql.end();
+						exit(0);
+					}
+				});
 			}
 		}
 	});
@@ -95,4 +121,4 @@ function overwriteDatabase(tables) {
 	});
 }
 
-module.exports = checkDatabse;
+checkDatabse();

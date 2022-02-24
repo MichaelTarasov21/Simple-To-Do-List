@@ -1,3 +1,4 @@
+require("dotenv").config();
 let set_port = 8080;
 if (process.env.PORT) {
 	set_port = parseInt(process.env.PORT);
@@ -23,10 +24,9 @@ if (process.env.HASHSTRENGTH) {
 	set_saltRounds = parseInt(process.env.HASHSTRENGTH);
 }
 
+set_cookieSecret = "";
 if (process.env.COOKIESECRET) {
 	set_cookieSecret = process.env.COOKIESECRET;
-} else {
-	throw "Cookie secret must be set"
 }
 
 const config = {

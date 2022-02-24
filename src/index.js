@@ -1,4 +1,3 @@
-require("dotenv").config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -6,14 +5,10 @@ const path = require("path");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 const config = require("./config.js");
-const checkDatabse = require("./checkdatabase.js");
 const login = require("./login.js");
 const sendnotes = require("./sendnotes.js");
 const autoRoute = require("./autorouter.js");
 const hidePage = require("./secure_connect.js");
-
-const tables = ["sessions", "tasks", "users"];
-checkDatabse(tables);
 
 const sessionStoreOptions = {
 	host: config.sqlhost,
