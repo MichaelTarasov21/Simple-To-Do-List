@@ -6,7 +6,7 @@ const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 const config = require("./config.js");
 const login = require("./login.js");
-const sendnotes = require("./sendnotes.js");
+const notes = require("./notes.js");
 const autoRoute = require("./autorouter.js");
 const loginPage = require("./login_page.js");
 const userPage = require("./user_page.js");
@@ -57,4 +57,4 @@ app.use("/notes", userPage);
 app.use("/notes", express.static(path.join(__dirname, "frontend/private/users")));
 
 app.post("/login", login);
-app.post("/notes", sendnotes); // Uses post to ensure a broswer sends the request and does not merely assume that it already has the results (code 304)
+app.post("/notes", notes);
