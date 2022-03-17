@@ -20,7 +20,7 @@ function checkDatabse() {
 	});
 	sql.query(`SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = "${config.database_name}"`, function (err, result) {
 		if (err) throw err;
-		if (result == "") {
+		if (result.length === 0) {
 			console.log("Database named " + config.database_name + " not found. Attempting to create.");
 			sql.query(`CREATE DATABASE ${config.database_name}`, function (err) {
 				// This is a common and simple error so it should be explained more clearly and should terminate the program more quietly
