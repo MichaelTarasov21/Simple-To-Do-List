@@ -1,9 +1,8 @@
 const bcrypt = require("bcrypt");
 const mysql = require("mysql");
-const { exit } = require("process");
 const config = require("./config.js");
 
-function createUser(username, password, admin = false, initial_setup = false) {
+function createUser(username = String, password = String, finish = Function, admin = false) {
 	const sql = mysql.createConnection({
 		host: config.sqlhost,
 		user: config.sqluser,
@@ -25,11 +24,7 @@ function createUser(username, password, admin = false, initial_setup = false) {
 				}
 			});
 			sql.query(`INSERT INTO users(administrator, username, password) VALUES (${admin}, "${username}", "${hash}")`);
-			sql.end(function(){
-				if (initial_setup){
-					exit(0)
-				}
-			});
+			sql.end(finish());
 		});
 	});
 }

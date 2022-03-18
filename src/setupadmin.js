@@ -1,3 +1,4 @@
+const { exit } = require("process");
 const createUser = require("./createuser.js");
 const rl = require("./readline");
 
@@ -7,7 +8,14 @@ function setupAdmin() {
 		if (customise.toLowerCase() === "n" || customise.toLowerCase() === "no") {
 			console.log("Creating an administrator account with username administrator and password ChangeMe!");
 			console.log("Log in to the web interface to change these");
-			createUser("administrator", "ChangeMe!", true, true);
+			createUser(
+				"administrator",
+				"ChangeMe!",
+				function () {
+					exit(0);
+				},
+				true
+			);
 		} else if (customise === "" || customise.toLowerCase() === "y" || customise.toLowerCase() === "yes") {
 			function getUsername() {
 				rl.question("Username: ", function (username) {
@@ -21,7 +29,14 @@ function setupAdmin() {
 									console.log("Password can not be blank");
 									getPassword();
 								} else {
-									createUser(username, password, true, true);
+									createUser(
+										username,
+										password,
+										function () {
+											exit(0);
+										},
+										true
+									);
 								}
 							});
 						}
