@@ -29,6 +29,9 @@ body {
 	background-color: white;
 	font-size: 250%;
 
+	overflow-y: auto;
+	overflow-x: hidden;/* This doesn't actually exist so we hide the scrollbar */
+
 	.note {
 		display: block;
 		width: 100%;
