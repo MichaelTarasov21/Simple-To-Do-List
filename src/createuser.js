@@ -8,6 +8,7 @@ function createUser(username = String, password = String, finish = Function, adm
 		user: config.sqluser,
 		password: config.sqlpassword,
 		database: config.database_name,
+		charset: "utf8mb4",
 	});
 
 	username = mysql.escape(username);
@@ -24,7 +25,7 @@ function createUser(username = String, password = String, finish = Function, adm
 				}
 			});
 			sql.query(`INSERT INTO users(administrator, username, password) VALUES (${admin}, "${username}", "${hash}")`);
-			sql.end(finish());
+			sql.end(finish);
 		});
 	});
 }

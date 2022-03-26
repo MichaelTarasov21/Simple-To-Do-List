@@ -16,7 +16,7 @@ function addNote(request, res) {
 	const userid = request.session.userid;
 	let flag = "";
 	if (data.flag !== "") {
-		flag = mysql.escape(data.flag.charAt(0));
+		flag = mysql.escape(data.flag.slice(0, 5));
 	}
 
 	const message = mysql.escape(data.message.substring(0, 1000)); // Crop messages that are longer than the maximum length
@@ -44,6 +44,7 @@ function addNote(request, res) {
 		user: config.sqluser,
 		password: config.sqlpassword,
 		database: config.database_name,
+		charset: "utf8mb4",
 	});
 
 	sql.connect(function (err) {

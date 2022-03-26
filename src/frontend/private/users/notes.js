@@ -106,7 +106,7 @@ function insertForm() {
 				<option value="‼️">‼️</option>
 				<option value="⚠️">⚠️</option>
 			</datalist>
-			<input type="text" id="flag" name="flag" label="flag" list="emotes" maxlength="1" onmouseover="focus()"> - 
+			<input type="text" id="flag" name="flag" label="flag" list="emotes" maxlength="5" onmouseover="focus()"> -
 			<input type="text" id="message" name="message" label="message" placeholder="Your note" maxlength="1000" required>
 		</span>
 		<div id="expireyLine" class="note">

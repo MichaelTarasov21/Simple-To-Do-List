@@ -9,6 +9,7 @@ const sql = mysql.createConnection({
 	host: config.sqlhost,
 	user: config.sqluser,
 	password: config.sqlpassword,
+	charset: "utf8mb4",
 });
 
 function checkDatabse() {
@@ -22,7 +23,7 @@ function checkDatabse() {
 		if (err) throw err;
 		if (result.length === 0) {
 			console.log("Database named " + config.database_name + " not found. Attempting to create.");
-			sql.query(`CREATE DATABASE ${config.database_name}`, function (err) {
+			sql.query(`CREATE DATABASE ${config.database_name} CHARACTER SET utf8mb4`, function (err) {
 				// This is a common and simple error so it should be explained more clearly and should terminate the program more quietly
 				if (err) {
 					if (err.code === "ER_DBACCESS_DENIED_ERROR") {
@@ -57,8 +58,9 @@ function checkDatabseTables() {
 				if (tables.indexOf("sessions") === tables.length - 1) {
 					tables = tables.slice(0, tables.indexOf("sessions"));
 				} else {
+					let original_tables = tables;
 					tables = tables.slice(0, tables.indexOf("sessions"));
-					tables.concat(tables.slice(tables.indexOf("sessions") + 1));
+					tables = tables.concat(original_tables.slice(tables.indexOf("sessions")));
 				}
 			}
 

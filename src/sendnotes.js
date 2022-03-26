@@ -13,6 +13,7 @@ function sendnotes(request, res) {
 		user: config.sqluser,
 		password: config.sqlpassword,
 		database: config.database_name,
+		charset: "utf8mb4",
 	});
 
 	sql.connect(function (err) {

@@ -7,6 +7,7 @@ const sql = mysql.createConnection({
 	user: config.sqluser,
 	password: config.sqlpassword,
 	database: config.database_name,
+	charset: "utf8mb4",
 });
 
 function createTables() {
@@ -37,12 +38,20 @@ function createTables() {
 			completed BOOLEAN NOT NULL, 
 			completed_date DATE NULL, 
 			expiration_date DATE NULL, 
-			flag nCHAR(1) NULL,
+			flag nVARCHAR(5) NULL,
 			FOREIGN KEY (userid) REFERENCES users(userid))`,
 		function (err) {
 			if (err) throw err;
 		}
 	);
+	// Conevert tables to utf8mb4 in order to prevent crashes when using modern emojis.
+	// I couldn't create the tables as utf8mb4 because the columns were still being set to ut8mb3 and setting them up manually didn't work.
+	sql.query(`ALTER TABLE users CONVERT TO CHARACTER SET utf8mb4`, function (err) {
+		if (err) throw err;
+	});
+	sql.query(`ALTER TABLE tasks CONVERT TO CHARACTER SET utf8mb4`, function (err) {
+		if (err) throw err;
+	});
 	console.log("Sucessfully created tables");
 	sql.end(setupAdmin);
 }
