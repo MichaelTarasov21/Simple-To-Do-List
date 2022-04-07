@@ -1,3 +1,5 @@
+import GraphemeSplitter from "./grapheme-splitter.js";
+
 function clearnotepad() {
 	//Resets the note pad back to an empty state
 	const page = document.getElementById("page");
@@ -20,10 +22,7 @@ function add_notes() {
 		// The risk here is low since injecting the webpage requires one to have stored a note as the user in the past. However, the solution is not difficult to implement.
 		if (index === 0) {
 			// If the note is the last one. Insert some padding between notes and the new note form.
-			document.getElementById("page").insertAdjacentHTML(
-				"afterbegin",
-				`<br /><br />`
-			);
+			document.getElementById("page").insertAdjacentHTML("afterbegin", `<br /><br />`);
 		}
 		document.getElementById("page").insertAdjacentHTML("afterbegin", `<div class="note"></div>`);
 		const container = document.getElementsByClassName("note")[0];
@@ -45,6 +44,18 @@ function add_notes() {
 }
 
 function insertForm() {
+	function lengthLimit() {
+		// Only allows a single charachter into the flag box. Splits charachters into graphemes to support combined emojis.
+		const splitter = new GraphemeSplitter();
+		const flag = document.getElementById("flag");
+		const splitvalue = splitter.splitGraphemes(flag.value); // Create an array out of the charachters in the flag box.
+		flag.value = splitvalue[0];
+		if (flag.value === "undefined") {
+			// If the input is an unkown charachter (such as a backspace) clear the field.
+			flag.value = "";
+		}
+	}
+
 	function showDateInput() {
 		const expires = document.getElementById("expires").checked;
 		const dateInput = document.getElementById("dateInput");
@@ -98,7 +109,6 @@ function insertForm() {
 
 		hideForm();
 	}
-
 	document.getElementById("newnote").innerHTML = `
 		<span class="note">
 			<datalist id="emotes">
@@ -106,7 +116,7 @@ function insertForm() {
 				<option value="‼️">‼️</option>
 				<option value="⚠️">⚠️</option>
 			</datalist>
-			<input type="text" id="flag" name="flag" label="flag" list="emotes" maxlength="5" onmouseover="focus()"> -
+			<input type="text" id="flag" name="flag" label="flag" list="emotes"> -
 			<input type="text" id="message" name="message" label="message" placeholder="Your note" maxlength="1000" required>
 		</span>
 		<div id="expireyLine" class="note">
@@ -122,6 +132,7 @@ function insertForm() {
 			<button id="cancelNewNote">Cancel</button>
 		</div>
 	`;
+	document.getElementById("flag").addEventListener("input", lengthLimit);
 	document.getElementById("expires").addEventListener("click", showDateInput);
 	document.getElementById("cancelNewNote").addEventListener("click", hideForm);
 	document.getElementById("addNewNote").addEventListener("click", sendForm);

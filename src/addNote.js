@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const config = require("./config.js");
+const GraphemeSplitter = require("./grapheme-splitter.js");
 
 function addNote(request, res) {
 	let response = {
@@ -16,7 +17,11 @@ function addNote(request, res) {
 	const userid = request.session.userid;
 	let flag = "";
 	if (data.flag !== "") {
-		flag = mysql.escape(data.flag.slice(0, 5));
+		// Sanitize the flag field to leave only a single charachter
+		const splitter = new GraphemeSplitter();
+		const splitvalue = splitter.splitGraphemes(data.flag); // Create an array out of the charachters in the flag box.
+		flag = splitvalue[0];
+		flag = mysql.escape(flag);
 	}
 
 	const message = mysql.escape(data.message.substring(0, 1000)); // Crop messages that are longer than the maximum length

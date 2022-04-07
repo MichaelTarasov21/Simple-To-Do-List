@@ -38,7 +38,7 @@ function createTables() {
 			completed BOOLEAN NOT NULL, 
 			completed_date DATE NULL, 
 			expiration_date DATE NULL, 
-			flag nVARCHAR(5) NULL,
+			flag nVARCHAR(10) NULL,
 			FOREIGN KEY (userid) REFERENCES users(userid))`,
 		function (err) {
 			if (err) throw err;
@@ -46,10 +46,10 @@ function createTables() {
 	);
 	// Conevert tables to utf8mb4 in order to prevent crashes when using modern emojis.
 	// I couldn't create the tables as utf8mb4 because the columns were still being set to ut8mb3 and setting them up manually didn't work.
-	sql.query(`ALTER TABLE users CONVERT TO CHARACTER SET utf8mb4`, function (err) {
+	sql.query(`ALTER TABLE users CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`, function (err) {
 		if (err) throw err;
 	});
-	sql.query(`ALTER TABLE tasks CONVERT TO CHARACTER SET utf8mb4`, function (err) {
+	sql.query(`ALTER TABLE tasks CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`, function (err) {
 		if (err) throw err;
 	});
 	console.log("Sucessfully created tables");
