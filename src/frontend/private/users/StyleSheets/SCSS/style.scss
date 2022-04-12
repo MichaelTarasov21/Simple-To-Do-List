@@ -30,7 +30,7 @@ body {
 	font-size: 250%;
 
 	overflow-y: auto;
-	overflow-x: hidden;/* This doesn't actually exist so we hide the scrollbar */
+	overflow-x: hidden; /* This doesn't actually exist so we hide the scrollbar */
 
 	.note {
 		display: block;
@@ -54,13 +54,21 @@ body {
 			font-size: 65%;
 		}
 		#flag {
-			width: 1em; /* Technically not the right unit for width but it allows for the use of emojis better than ch */
+			width: 2.5em;
+			@supports (-moz-appearance: none) {
+				// Field is wider in Chromium due to the way that Chromium handles datalists
+				width: 1em; /* Technically not the right unit for width but it allows for the use of emojis better than ch */
+			}
 		}
 		#flag:focus {
 			outline: none;
 		}
 		#message {
-			width: calc(100% - 1em - 4ch - 3px);
+			width: calc(100% - 2.5em - 4ch - 3px);
+			@supports (-moz-appearance: none) {
+				// Field must be wider on Firefox due to a smaller flag field (see above)
+				width: calc(100% - 1em - 4ch - 3px);
+			}
 		}
 		#expireyLine {
 			font-size: 70%;
