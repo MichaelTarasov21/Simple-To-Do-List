@@ -18,7 +18,7 @@ function getnotes() {
 }
 function add_notes() {
 	function insertNote(note, index) {
-		// Insert a note dive then fill in the content. This is to prevent javascript injection into the webpage.
+		// Insert a note div then fill in the content. This is to prevent javascript injection into the webpage.
 		// The risk here is low since injecting the webpage requires one to have stored a note as the user in the past. However, the solution is not difficult to implement.
 		if (index === 0) {
 			// If the note is the last one. Insert some padding between notes and the new note form.
