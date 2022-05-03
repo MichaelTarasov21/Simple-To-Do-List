@@ -54,7 +54,11 @@ function add_notes() {
 		if (note.flag) {
 			container.innerText = `${note.flag} - ${container.innerText}`;
 		}
-		container.addEventListener("click", completeNote);
+		if (note.completed) {
+			container.classList.add("completed");
+		} else {
+			container.addEventListener("click", completeNote);
+		}
 	}
 	if (this.readyState == 4 && this.status == 200) {
 		const response = JSON.parse(this.responseText);

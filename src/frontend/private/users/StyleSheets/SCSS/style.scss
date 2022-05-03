@@ -46,6 +46,11 @@ body {
 
 		padding: 1px;
 	}
+	.completed {
+		text-decoration: line-through;
+		text-decoration-thickness: 4px;
+	}
+
 	#newnote {
 		input {
 			font-size: 65%;
