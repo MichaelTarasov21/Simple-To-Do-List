@@ -8,6 +8,18 @@ function clearnotepad() {
 	`;
 	document.getElementById("addnote").addEventListener("click", insertForm);
 }
+
+function reloadMessages() {
+	if (this.readyState == 4 && this.status == 200) {
+		const response = JSON.parse(this.responseText);
+		if (response.status === "Success") {
+			getnotes();
+		} else {
+			alert("An error has occured. Please try again later.");
+		}
+	}
+}
+
 function getnotes() {
 	const xhttp = new XMLHttpRequest();
 
@@ -16,6 +28,18 @@ function getnotes() {
 	xhttp.onreadystatechange = add_notes;
 	xhttp.send(`method=getnotes`);
 }
+
+function completeNote(event) {
+	const noteid = event.target.getAttribute("noteid");
+
+	const xhttp = new XMLHttpRequest();
+
+	xhttp.open("POST", "/notes", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.onreadystatechange = reloadMessages;
+	xhttp.send(`method=completenote&note=${parseInt(noteid)}`);
+}
+
 function add_notes() {
 	function insertNote(note, index) {
 		// Insert a note div then fill in the content. This is to prevent javascript injection into the webpage.
@@ -24,12 +48,13 @@ function add_notes() {
 			// If the note is the last one. Insert some padding between notes and the new note form.
 			document.getElementById("page").insertAdjacentHTML("afterbegin", `<br /><br />`);
 		}
-		document.getElementById("page").insertAdjacentHTML("afterbegin", `<div class="note"></div>`);
+		document.getElementById("page").insertAdjacentHTML("afterbegin", `<div class="note" noteID="${note.noteid}"></div>`);
 		const container = document.getElementsByClassName("note")[0];
 		container.innerText = note.message;
 		if (note.flag) {
 			container.innerText = `${note.flag} - ${container.innerText}`;
 		}
+		container.addEventListener("click", completeNote);
 	}
 	if (this.readyState == 4 && this.status == 200) {
 		const response = JSON.parse(this.responseText);
@@ -67,17 +92,6 @@ function insertForm() {
 	}
 
 	function sendForm() {
-		function reloadMessages() {
-			if (this.readyState == 4 && this.status == 200) {
-				const response = JSON.parse(this.responseText);
-				if (response.status === "Success") {
-					getnotes();
-				} else {
-					alert("An error has occured. Please try again later.");
-				}
-			}
-		}
-
 		const flag = document.getElementById("flag").value;
 		const message = document.getElementById("message").value;
 		const expires = document.getElementById("expires").checked;

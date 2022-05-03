@@ -1,5 +1,7 @@
 sendNotes = require("./sendnotes.js");
 addNote = require("./addNote.js");
+completeNote = require("./completeNote.js");
+
 function notes(request, res) {
 	// A handler that determines what method is being called and hands off the request to the necessary function.
 	const method = request.body.method;
@@ -9,6 +11,9 @@ function notes(request, res) {
 			break;
 		case "addnote":
 			addNote(request, res);
+			break;
+		case "completenote":
+			completeNote(request, res);
 			break;
 		default:
 			let response = {
