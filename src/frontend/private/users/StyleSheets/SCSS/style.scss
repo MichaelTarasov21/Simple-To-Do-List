@@ -46,6 +46,10 @@ body {
 
 		padding: 1px;
 	}
+	.note:hover {
+		text-decoration: line-through;
+		text-decoration-thickness: 4px;
+	}
 	.completed {
 		text-decoration: line-through;
 		text-decoration-thickness: 4px;
