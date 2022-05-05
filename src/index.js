@@ -47,8 +47,8 @@ app.use(
 	})
 );
 
-app.listen(config.port, () => {
-	console.log(`Example app listening on port ${config.port}!`);
+app.listen(config.port, config.bindAdress, () => {
+	console.log(`Example app listening on port ${config.port} at ${config.bindAdress}!`);
 });
 app.get("/", autoRoute);
 app.use("/login", loginPage);

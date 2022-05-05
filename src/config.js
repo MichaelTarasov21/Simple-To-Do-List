@@ -3,6 +3,10 @@ let set_port = 8080;
 if (process.env.PORT) {
 	set_port = parseInt(process.env.PORT);
 }
+let set_bind_address = "127.0.0.1"
+if (process.env.BINDADRESS) {
+	set_bind_address = process.env.BINDADRESS;
+}
 let set_sqlhost = "localhost";
 if (process.env.SQLHOST) {
 	set_sqlhost = process.env.SQLHOST;
@@ -30,6 +34,7 @@ if (process.env.COOKIESECRET) {
 }
 
 const config = {
+	bindAdress: set_bind_address,
 	port: set_port,
 	sqlhost: set_sqlhost,
 	sqluser: set_sqluser,
