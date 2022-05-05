@@ -39,6 +39,16 @@ function completeNote(event) {
 	xhttp.onreadystatechange = reloadMessages;
 	xhttp.send(`method=completenote&note=${parseInt(noteid)}`);
 }
+function uncompleteNote(event) {
+	const noteid = event.target.getAttribute("noteid");
+
+	const xhttp = new XMLHttpRequest();
+
+	xhttp.open("POST", "/notes", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.onreadystatechange = reloadMessages;
+	xhttp.send(`method=uncompletenote&note=${parseInt(noteid)}`);
+}
 
 function add_notes() {
 	function insertNote(note, index) {
@@ -56,6 +66,7 @@ function add_notes() {
 		}
 		if (note.completed) {
 			container.classList.add("completed");
+			container.addEventListener("click", uncompleteNote);
 		} else {
 			container.addEventListener("click", completeNote);
 		}

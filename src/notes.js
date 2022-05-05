@@ -15,6 +15,9 @@ function notes(request, res) {
 		case "completenote":
 			completeNote(request, res);
 			break;
+		case "uncompletenote":
+			completeNote(request, res, true);
+			break;
 		default:
 			let response = {
 				status: "Error",

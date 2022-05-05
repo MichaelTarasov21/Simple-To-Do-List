@@ -54,6 +54,9 @@ body {
 		text-decoration: line-through;
 		text-decoration-thickness: 4px;
 	}
+	.completed:hover {
+		text-decoration: none;
+	}
 
 	#newnote {
 		input {
