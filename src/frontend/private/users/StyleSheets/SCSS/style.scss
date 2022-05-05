@@ -50,6 +50,10 @@ body {
 		text-decoration: line-through;
 		text-decoration-thickness: 4px;
 	}
+	.hoverDisable:hover {
+		// Disables hover effect inherited from note class
+		text-decoration: none;
+	}
 	.completed {
 		text-decoration: line-through;
 		text-decoration-thickness: 4px;

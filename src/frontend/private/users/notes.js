@@ -139,7 +139,7 @@ function insertForm() {
 		hideForm();
 	}
 	document.getElementById("newnote").innerHTML = `
-		<span class="note">
+		<span class="note hoverDisable">
 			<datalist id="emotes">
 				<option value="❗">❗</option>
 				<option value="‼️">‼️</option>
@@ -148,7 +148,7 @@ function insertForm() {
 			<input type="text" id="flag" name="flag" label="flag" list="emotes"> -
 			<input type="text" id="message" name="message" label="message" placeholder="Your note" maxlength="1000" required>
 		</span>
-		<div id="expireyLine" class="note">
+		<div id="expireyLine" class="note hoverDisable">
 			<span>
 				Expires: <input type="checkbox" id="expires"></input>
 			</span>
