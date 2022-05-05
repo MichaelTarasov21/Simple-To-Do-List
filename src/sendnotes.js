@@ -25,7 +25,12 @@ function sendnotes(request, res) {
 	});
 
 	const userid = request.session.userid;
-	sql.query(`SELECT * FROM tasks WHERE userid=${userid}`, function (err, result) {
+
+	// Get today's date in a format appropriate for use in SQL
+	const date = new Date();
+	const today = mysql.escape(date.toJSON().slice(0, 10));
+
+	sql.query(`SELECT * FROM tasks WHERE (userid=${userid} AND (completed=0 OR completed_date = ${today}))`, function (err, result) {
 		if (err) {
 			res.send(response);
 			sql.end();
