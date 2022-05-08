@@ -44,7 +44,7 @@ function createTables() {
 			if (err) throw err;
 		}
 	);
-	// Conevert tables to utf8mb4 in order to prevent crashes when using modern emojis.
+	// Convert tables to utf8mb4 in order to prevent crashes when using modern emojis.
 	// I couldn't create the tables as utf8mb4 because the columns were still being set to ut8mb3 and setting them up manually didn't work.
 	sql.query(`ALTER TABLE users CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`, function (err) {
 		if (err) throw err;
