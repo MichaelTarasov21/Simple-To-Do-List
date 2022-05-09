@@ -49,6 +49,16 @@ function uncompleteNote(event) {
 	xhttp.onreadystatechange = reloadMessages;
 	xhttp.send(`method=uncompletenote&note=${parseInt(noteid)}`);
 }
+function deleteNote(event) {
+	const noteid = event.target.getAttribute("noteid");
+
+	const xhttp = new XMLHttpRequest();
+
+	xhttp.open("POST", "/notes", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.onreadystatechange = reloadMessages;
+	xhttp.send(`method=deletenote&note=${parseInt(noteid)}`);
+}
 
 function add_notes() {
 	function insertNote(note, index) {
@@ -172,4 +182,38 @@ function hideForm() {
 	document.getElementById("addnote").addEventListener("click", insertForm);
 }
 
+function erase() {
+	const eraser = document.getElementById("eraser");
+	eraser.removeEventListener("click", erase);
+	eraser.addEventListener("click", stopErasing);
+	eraser.classList.add("grayscale");
+	const notes = document.getElementsByClassName("note");
+	for (let i = 0; i < notes.length; i++) {
+		const element = notes[i];
+		if (element.classList.contains("completed")) {
+			element.removeEventListener("click", uncompleteNote);
+		} else {
+			element.removeEventListener("click", completeNote);
+		}
+		element.addEventListener("click", deleteNote);
+	}
+}
+function stopErasing() {
+	const eraser = document.getElementById("eraser");
+	eraser.removeEventListener("click", stopErasing);
+	eraser.addEventListener("click", erase);
+	eraser.classList.remove("grayscale");
+	const notes = document.getElementsByClassName("note");
+	for (let i = 0; i < notes.length; i++) {
+		const element = notes[i];
+		element.removeEventListener("click", deleteNote);
+		if (element.classList.contains("completed")) {
+			element.addEventListener("click", uncompleteNote);
+		} else {
+			element.addEventListener("click", completeNote);
+		}
+	}
+}
+
 getnotes();
+document.getElementById("eraser").addEventListener("click", erase);

@@ -18,23 +18,24 @@ button {
 	cursor: pointer;
 }
 
+$pageheight: 80vh;
+$pagewidth: 30vw;
+
 #page {
 	display: block;
 
-	$height: 80vh;
-	$width: 30vw;
-	height: $height;
-	width: $width;
+	height: $pageheight;
+	width: $pagewidth;
 
 	position: relative;
-	left: calc((100vw - $width) / 2);
-	top: calc((100vh - $height) / 2);
+	left: calc((100vw - $pagewidth) / 2);
+	top: calc((100vh - $pageheight) / 2);
 
 	background-color: white;
 	font-size: 250%;
 
 	overflow-y: auto;
-	overflow-x: hidden; /* This doesn't actually exist so we hide the scrollbar */
+	overflow-x: hidden; /* This doesn't actually exist so I hid the scrollbar */
 
 	.note {
 		display: block;
@@ -107,4 +108,20 @@ button {
 			justify-content: space-evenly;
 		}
 	}
+}
+
+#eraser {
+	// The eraser image that can be clicked to delete notes
+	cursor: pointer;
+
+	$height: 5vh;
+	height: $height;
+	width: auto;
+
+	position: relative;
+	left: calc(50vw + $pagewidth / 2 + 2px);
+	top: $height;
+}
+.grayscale {
+	filter: grayscale(90%);
 }

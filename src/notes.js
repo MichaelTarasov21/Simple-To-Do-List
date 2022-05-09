@@ -1,6 +1,7 @@
 sendNotes = require("./sendnotes.js");
 addNote = require("./addNote.js");
 completeNote = require("./completeNote.js");
+deleteNote = require("./deleteNote");
 
 function notes(request, res) {
 	// A handler that determines what method is being called and hands off the request to the necessary function.
@@ -17,6 +18,9 @@ function notes(request, res) {
 			break;
 		case "uncompletenote":
 			completeNote(request, res, true);
+			break;
+		case "deletenote":
+			deleteNote(request, res);
 			break;
 		default:
 			let response = {
