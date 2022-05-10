@@ -34,3 +34,9 @@ function failedLogin() {
 }
 
 document.getElementById("login").addEventListener("click", login);
+document.getElementById("password").addEventListener("keydown", function (event) {
+	//If key pressed is enter, send the login form
+	if (event.key === "Enter") {
+		login();
+	}
+});
