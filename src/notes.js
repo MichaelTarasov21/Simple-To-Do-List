@@ -1,7 +1,7 @@
-sendNotes = require("./sendnotes.js");
-addNote = require("./addNote.js");
-completeNote = require("./completeNote.js");
-deleteNote = require("./deleteNote");
+const sendNotes = require("./sendnotes.js");
+const addNote = require("./addNote.js");
+const completeNote = require("./completeNote.js");
+const deleteNote = require("./deleteNote");
 
 function notes(request, res) {
 	// A handler that determines what method is being called and hands off the request to the necessary function.
