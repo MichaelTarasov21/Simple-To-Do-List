@@ -1,0 +1,20 @@
+#page {
+	.completed {
+		text-decoration: none;
+	}
+	.note:hover {
+		text-decoration: line-through;
+		-webkit-text-decoration-color: red; /* Safari */
+		text-decoration-color: red;
+		text-decoration-thickness: 4px;
+	}
+	.hoverDisable:hover {
+		// Disables hover effect inherited from note class
+		text-decoration: none;
+	}
+}
+
+#eraser {
+	// The eraser image that can be clicked to delete notes
+	filter: grayscale(90%);
+}

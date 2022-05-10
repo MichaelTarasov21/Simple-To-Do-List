@@ -186,7 +186,11 @@ function erase() {
 	const eraser = document.getElementById("eraser");
 	eraser.removeEventListener("click", erase);
 	eraser.addEventListener("click", stopErasing);
-	eraser.classList.add("grayscale");
+
+	// Enable styles associated with deleting notes
+	const deletionstyles = document.getElementById("deletion");
+	deletionstyles.disabled = false;
+
 	const notes = document.getElementsByClassName("note");
 	for (let i = 0; i < notes.length; i++) {
 		const element = notes[i];
@@ -202,7 +206,11 @@ function stopErasing() {
 	const eraser = document.getElementById("eraser");
 	eraser.removeEventListener("click", stopErasing);
 	eraser.addEventListener("click", erase);
-	eraser.classList.remove("grayscale");
+
+	// Disable styles associated with deleting notes
+	const deletionstyles = document.getElementById("deletion");
+	deletionstyles.disabled = true;
+
 	const notes = document.getElementsByClassName("note");
 	for (let i = 0; i < notes.length; i++) {
 		const element = notes[i];
