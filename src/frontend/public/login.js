@@ -18,7 +18,7 @@ function process_result() {
 	if (this.readyState == 4 && this.status == 200) {
 		const response = JSON.parse(this.responseText);
 		if (response.status === "Success") {
-			window.location.pathname = window.location.pathname + "../"; // Redirects while still being compatible with a reverse proxy path containing /login
+			window.location.pathname = window.location.pathname + "../"; // Redirects while keeping hidden path hidden
 		} else {
 			failedLogin();
 		}
