@@ -6,10 +6,10 @@ const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 const config = require("./config.js");
 const login = require("./login.js");
-const notes = require("./notes.js");
-const autoRoute = require("./autorouter.js");
-const loginPage = require("./login_page.js");
-const userPage = require("./user_page.js");
+const notes = require("./notes/notes.js");
+const autoRoute = require("./routing/autorouter.js");
+const loginPage = require("./routing/login_page.js");
+const userPage = require("./routing/user_page.js");
 
 const sessionStoreOptions = {
 	host: config.sqlhost,

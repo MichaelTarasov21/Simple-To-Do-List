@@ -1,5 +1,5 @@
 const mysql = require("mysql");
-const config = require("./config.js");
+const config = require("../config.js");
 
 function completeNote(request, res, uncomplete = false) {
 	let response = {

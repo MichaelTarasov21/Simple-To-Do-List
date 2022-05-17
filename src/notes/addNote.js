@@ -1,5 +1,5 @@
 const mysql = require("mysql");
-const config = require("./config.js");
+const config = require("../config.js");
 const GraphemeSplitter = require("./grapheme-splitter.js");
 
 function addNote(request, res) {

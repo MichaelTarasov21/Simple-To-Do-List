@@ -3,7 +3,7 @@ const { exit } = require("process");
 const createTables = require("./createtables");
 const setupAdmin = require("./setupadmin");
 const rl = require("./readline");
-const config = require("./config.js");
+const config = require("../src/config.js");
 
 const sql = mysql.createConnection({
 	host: config.sqlhost,

@@ -1,5 +1,5 @@
 const mysql = require("mysql");
-const config = require("./config.js");
+const config = require("../config.js");
 
 function sendnotes(request, res) {
 	// Status defaults to error, if no errors occur it should be changed

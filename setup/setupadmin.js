@@ -1,6 +1,6 @@
 const { exit } = require("process");
-const createUser = require("./createuser.js");
 const rl = require("./readline");
+const createUser = require("../src/createuser.js");
 
 function setupAdmin() {
 	rl.question("Would you like to create an admin account now? (Y/n) ", function (customise) {
