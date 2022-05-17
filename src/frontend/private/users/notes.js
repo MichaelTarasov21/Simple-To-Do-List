@@ -50,6 +50,7 @@ function uncompleteNote(event) {
 	xhttp.send(`method=uncompletenote&note=${parseInt(noteid)}`);
 }
 function deleteNote(event) {
+	stopErasing();
 	const noteid = event.target.getAttribute("noteid");
 
 	const xhttp = new XMLHttpRequest();
