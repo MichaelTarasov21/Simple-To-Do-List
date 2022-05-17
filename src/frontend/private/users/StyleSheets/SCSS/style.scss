@@ -122,6 +122,18 @@ $pagewidth: 30vw;
 	left: calc(50vw + $pagewidth / 2 + 2px);
 	top: $height;
 }
+#settings {
+	// The gear icon that opens the settings
+	cursor: pointer;
+
+	position: fixed;
+	top: 1vh;
+	right: 1vh;
+
+	height: 7vh;
+	width: auto;
+}
+
 .grayscale {
 	filter: grayscale(90%);
 }
