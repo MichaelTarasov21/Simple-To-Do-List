@@ -59,28 +59,48 @@ function addNote(request, res) {
 			return;
 		}
 	});
-	try {
-		if (flag === "" && expires === "") {
-			// Neither flag nor expirey is set
-			sql.query(`INSERT INTO tasks(userid, message, completed) VALUES (${userid}, ${message}, 0)`);
-		} else if (flag === "") {
-			// Flag is not set, expirey is
-			sql.query(`INSERT INTO tasks(userid, message, completed, expiration_date) VALUES (${userid}, ${message}, 0, ${expires})`);
-		} else if (expires === "") {
-			// Expirey is not set, flag is
-			sql.query(`INSERT INTO tasks(userid, message, completed, flag) VALUES (${userid}, ${message}, 0, ${flag})`);
-		} else {
-			//Both flag and expirey are set
-			sql.query(`INSERT INTO tasks(userid, message, completed, expiration_date, flag) VALUES (${userid}, ${message}, 0, ${expires}, ${flag})`);
-		}
+	if (flag === "" && expires === "") {
+		// Neither flag nor expirey is set
+		sql.query(`INSERT INTO tasks(userid, message, completed) VALUES (${userid}, ${message}, 0)`, function (err) {
+			if (err) {
+				res.send(response);
+			} else {
+				success();
+			}
+		});
+	} else if (flag === "") {
+		// Flag is not set, expirey is
+		sql.query(`INSERT INTO tasks(userid, message, completed, expiration_date) VALUES (${userid}, ${message}, 0, ${expires})`, function (err) {
+			if (err) {
+				res.send(response);
+			} else {
+				success();
+			}
+		});
+	} else if (expires === "") {
+		// Expirey is not set, flag is
+		sql.query(`INSERT INTO tasks(userid, message, completed, flag) VALUES (${userid}, ${message}, 0, ${flag})`, function (err) {
+			if (err) {
+				res.send(response);
+			} else {
+				success();
+			}
+		});
+	} else {
+		//Both flag and expirey are set
+		sql.query(`INSERT INTO tasks(userid, message, completed, expiration_date, flag) VALUES (${userid}, ${message}, 0, ${expires}, ${flag})`, function (err) {
+			if (err) {
+				res.send(response);
+			} else {
+				success();
+			}
+		});
+	}
+	function success() {
 		sql.end(function () {
 			response.status = "Success";
 			res.send(response);
 		});
-	} catch {
-		res.send(response);
-		sql.end();
-		return;
 	}
 }
 

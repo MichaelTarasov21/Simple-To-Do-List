@@ -30,7 +30,7 @@ function login(data, res) {
 		sql.query(`SELECT * FROM users WHERE username="${username}"`, function (err, result) {
 			sql.end();
 			if (err) {
-				console.log("There was an error in an SQL query");
+				console.log("Error during login: " + err.stack);
 				res.send(response);
 				return;
 			}
@@ -45,6 +45,9 @@ function login(data, res) {
 			const hash = result.password;
 
 			bcrypt.compare(password, hash, function (err, result) {
+				if (err) {
+					console.log("Error during the hashing of a password: " + err.stack);
+				}
 				if (result) {
 					response.status = "Success";
 					data.session.userid = id;
