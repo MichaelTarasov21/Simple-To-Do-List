@@ -20,7 +20,7 @@ function sendnotes(request, res) {
 		if (err) {
 			console.error("error connecting: " + err.stack);
 			res.send(response);
-			return "error";
+			return;
 		}
 	});
 
