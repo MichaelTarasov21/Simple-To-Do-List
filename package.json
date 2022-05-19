@@ -7,7 +7,7 @@
     "serve": "node src/index.js",
     "build": "node node_modules/sass/sass.js src/frontend/public/StyleSheets/SCSS:src/frontend/public/StyleSheets/CSS src/frontend/private/users/StyleSheets/SCSS:src/frontend/private/users/StyleSheets/CSS",
     "start": "npm run build && npm run serve",
-    "devbuild": "node node_modules/sass/sass.js -w src/frontend/public/StyleSheets/SCSS:src/frontend/public/StyleSheets/CSS src/frontend/private/users/StyleSheets/SCSS:src/frontend/private/users/StyleSheets/CSS",
+    "devbuild": "node node_modules/sass/sass.js -w src/frontend/public/StyleSheets/SCSS:src/frontend/public/StyleSheets/CSS src/frontend/private/users/notes/StyleSheets/SCSS:src/frontend/private/users/notes/StyleSheets/CSS",
     "dev": "npm run devbuild & npm run serve",
     "setup": "npm i && node setup/checkdatabase.js"
   },

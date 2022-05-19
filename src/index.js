@@ -54,7 +54,7 @@ app.get("/", autoRoute);
 app.use("/login", loginPage);
 app.use("/login", express.static(path.join(__dirname, "frontend/public")));
 app.use("/notes", userPage);
-app.use("/notes", express.static(path.join(__dirname, "frontend/private/users")));
+app.use("/notes", express.static(path.join(__dirname, "frontend/private/users/notes")));
 
 app.post("/login", login);
 app.post("/notes", notes);
