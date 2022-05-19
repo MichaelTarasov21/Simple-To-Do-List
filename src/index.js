@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const helmet = require("helmet");
 const bodyParser = require("body-parser");
 const path = require("path");
 const session = require("express-session");
@@ -23,6 +24,8 @@ const sessionStoreOptions = {
 };
 
 const sessionStore = new MySQLStore(sessionStoreOptions);
+
+app.use(helmet({ contentSecurityPolicy: false })); //Recommended server hardening
 
 app.use(
 	session({
