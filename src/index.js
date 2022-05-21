@@ -7,6 +7,7 @@ const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 const config = require("./config.js");
 const login = require("./login.js");
+const logout = require("./logout.js");
 const notes = require("./notes/notes.js");
 const autoRoute = require("./routing/autorouter.js");
 const loginPage = require("./routing/login_page.js");
@@ -55,11 +56,12 @@ app.listen(config.port, config.bindAdress, () => {
 	console.log(`Example app listening on port ${config.port} at ${config.bindAdress}!`);
 });
 app.get("/", autoRoute);
+app.get("/logout", logout);
 app.use("/login", loginPage);
 app.use("/login", express.static(path.join(__dirname, "frontend/public")));
 app.use("/notes", userPage);
 app.use("/notes", express.static(path.join(__dirname, "frontend/private/users/notes")));
-app.use("/settings", settingsPage)
+app.use("/settings", settingsPage);
 app.use("/settings", express.static(path.join(__dirname, "frontend/private/users/settings")));
 
 app.post("/login", login);
