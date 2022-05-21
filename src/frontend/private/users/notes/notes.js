@@ -224,5 +224,10 @@ function stopErasing() {
 	}
 }
 
+function openSettings() {
+	window.location.pathname = window.location.pathname + "../settings"; // Redirects while keeping hidden path hidden
+}
+
 getnotes();
 document.getElementById("eraser").addEventListener("click", erase);
+document.getElementById("settingsicon").addEventListener("click", openSettings);
