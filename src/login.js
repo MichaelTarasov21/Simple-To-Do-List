@@ -41,6 +41,7 @@ function login(data, res) {
 			}
 
 			result = result[0]; // Parse the return in a manner where data is more easily accessible
+			const admin = result.administrator;
 			const id = result.userid;
 			const hash = result.password;
 
@@ -50,6 +51,7 @@ function login(data, res) {
 				}
 				if (result) {
 					response.status = "Success";
+					data.session.admin = admin;
 					data.session.userid = id;
 					res.send(response);
 					return;
