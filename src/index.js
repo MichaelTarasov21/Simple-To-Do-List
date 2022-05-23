@@ -13,6 +13,7 @@ const autoRoute = require("./routing/autorouter.js");
 const loginPage = require("./routing/login_page.js");
 const settingsPage = require("./routing/settings_page.js");
 const userPage = require("./routing/user_page.js");
+const userRoute = require("./users/users");
 
 const sessionStoreOptions = {
 	host: config.sqlhost,
@@ -63,6 +64,8 @@ app.use("/notes", userPage);
 app.use("/notes", express.static(path.join(__dirname, "frontend/private/users/notes")));
 app.use("/settings", settingsPage);
 app.use("/settings", express.static(path.join(__dirname, "frontend/private/users/settings")));
+app.use("/users", userPage);
+app.use("/users/", userRoute);
 
 app.post("/login", login);
 app.post("/notes", notes);
