@@ -25,40 +25,38 @@ function login(data, res) {
 	const response = {
 		status: "Failed",
 	};
-	sql.query(`USE ${config.database_name}`, function (err) {
-		if (err) throw err;
-		sql.query(`SELECT * FROM users WHERE username="${username}"`, function (err, result) {
-			sql.end();
+
+	sql.query(`SELECT * FROM users WHERE username="${username}"`, function (err, result) {
+		sql.end();
+		if (err) {
+			console.log("Error during login: " + err.stack);
+			res.send(response);
+			return;
+		}
+		if (result[0] === undefined) {
+			// Abort login if no results are found for a given username
+			res.send(response);
+			return;
+		}
+
+		result = result[0]; // Parse the return in a manner where data is more easily accessible
+		const admin = result.administrator;
+		const id = result.userid;
+		const hash = result.password;
+
+		bcrypt.compare(password, hash, function (err, result) {
 			if (err) {
-				console.log("Error during login: " + err.stack);
+				console.log("Error during the hashing of a password: " + err.stack);
+			}
+			if (result) {
+				response.status = "Success";
+				data.session.admin = admin;
+				data.session.userid = id;
 				res.send(response);
 				return;
-			}
-			if (result[0] === undefined) {
-				// Abort login if no results are found for a given username
+			} else {
 				res.send(response);
-				return;
 			}
-
-			result = result[0]; // Parse the return in a manner where data is more easily accessible
-			const admin = result.administrator;
-			const id = result.userid;
-			const hash = result.password;
-
-			bcrypt.compare(password, hash, function (err, result) {
-				if (err) {
-					console.log("Error during the hashing of a password: " + err.stack);
-				}
-				if (result) {
-					response.status = "Success";
-					data.session.admin = admin;
-					data.session.userid = id;
-					res.send(response);
-					return;
-				} else {
-					res.send(response);
-				}
-			});
 		});
 	});
 }
