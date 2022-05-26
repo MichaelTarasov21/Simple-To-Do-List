@@ -16,7 +16,7 @@ function logout() {
 function setEmail() {
 	const email = document.getElementById("email").value;
 
-	if (/.+@.+\..+/.test(email) && email.length < 255) {
+	if ((/.+@.+\..+/.test(email) || email === "") && email.length < 255) {
 		const xhttp = new XMLHttpRequest();
 
 		xhttp.open("POST", "/users/email", true);
@@ -24,6 +24,7 @@ function setEmail() {
 
 		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("email").setvalue = email;
 				console.log("Set");
 			} else if (this.readyState == 4 && this.status == 500) {
 				alert("An error has occured");
@@ -65,10 +66,11 @@ function closeSettings() {
 
 function parseSettings() {
 	const email = document.getElementById("email").value;
+	const originalEmail = document.getElementById("email").setvalue;
 	const oldpassword = document.getElementById("oldPassword").value;
 	const newpassword = document.getElementById("newPassword").value;
 
-	if (email) {
+	if (email !== originalEmail) {
 		setEmail();
 	}
 
@@ -95,6 +97,7 @@ function getEmail() {
 			// Set the email field value to the email on file for a user account
 			const response = JSON.parse(this.responseText);
 			document.getElementById("email").value = response[0].email;
+			document.getElementById("email").setvalue = response[0].email;
 		} else if (this.readyState == 4 && this.status == 500) {
 			alert("An error has occured");
 			window.location.reload(true); // Refresh the page to attempt recovery
