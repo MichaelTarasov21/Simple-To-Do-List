@@ -3,6 +3,7 @@ const app = express();
 const helmet = require("helmet");
 const bodyParser = require("body-parser");
 const path = require("path");
+const favicon = require('serve-favicon')
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 const config = require("./config.js");
@@ -56,6 +57,8 @@ app.use(
 app.listen(config.port, config.bindAdress, () => {
 	console.log(`Example app listening on port ${config.port} at ${config.bindAdress}!`);
 });
+
+app.use(favicon(path.join(__dirname, 'frontend', 'favicon.ico')))
 app.get("/", autoRoute);
 app.get("/logout", logout);
 app.use("/login", loginPage);
