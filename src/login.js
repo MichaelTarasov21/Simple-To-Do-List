@@ -3,6 +3,12 @@ const mysql = require("mysql");
 const config = require("./config.js");
 
 function login(data, res) {
+	const username = mysql.escape(String(data.body.username));
+	const password = String(data.body.password);
+	const response = {
+		status: "Failed",
+	};
+
 	const sql = mysql.createConnection({
 		host: config.sqlhost,
 		user: config.sqluser,
@@ -10,21 +16,6 @@ function login(data, res) {
 		database: config.database_name,
 		charset: "utf8mb4",
 	});
-
-	sql.connect(function (err) {
-		if (err) {
-			console.error("error connecting: " + err.stack);
-			res.send(response);
-			sql.end();
-			return;
-		}
-	});
-
-	const username = mysql.escape(String(data.body.username));
-	const password = String(data.body.password);
-	const response = {
-		status: "Failed",
-	};
 
 	sql.query(`SELECT * FROM users WHERE username="${username}"`, function (err, result) {
 		sql.end();
