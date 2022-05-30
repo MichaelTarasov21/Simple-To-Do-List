@@ -39,7 +39,29 @@
 				<br />
 				<br />
 				<button id="logout">Logout</button>
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<button id="delete">Delete Account</button>
 			</div>
+		</div>
+		<div id="confirmation">
+			<span id="confirmationbox">
+				<div id="cancelDeletion">╳</div>
+				You are about to delete your account including all notes pertaining to the account.
+				<br />
+				<br />
+				This is an irreversible action. Your account can not be re-enabled after deletion.
+				<br />
+				<br />
+				If you are certain, type <span class="bold">Delete My Account</span> in the box below.
+				<br />
+				<input type="text" id="acknowledgement" />
+				<button id="confirm" style="visibility: hidden;" autocomplete="off">Confirm Deletion</button>
+			</span>
 		</div>
 	</body>
 	<script type="module" src="settings.js"></script>
