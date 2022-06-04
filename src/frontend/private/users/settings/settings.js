@@ -73,6 +73,10 @@ function deleteAccount() {
 					alert("Your current password is incorrect");
 					abortDeletion();
 					break;
+				case 418:
+					alert("You are the last administrator. Make sure that there is at least one other admin account before deleting this one.");
+					abortDeletion();
+					break;
 				case 500:
 					alert("An error has occured");
 				default:
