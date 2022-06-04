@@ -17,10 +17,8 @@ function setPassword(req, res) {
 	});
 
 	function error() {
-		console.error("Error in password update " + err.stack);
 		res.status(500);
 		res.send();
-		sql.end();
 	}
 
 	function validPassword() {

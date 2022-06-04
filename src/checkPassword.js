@@ -15,13 +15,16 @@ function checkPassword(userid = Number, password = String, same = Function, diff
 
 	sql.query(`SELECT * FROM To_Do_List.users WHERE userid = ${userid}`, function (err, result) {
 		if (err) {
-			error(err);
+			console.error("Error in password update: " + err.stack);
+			error();
+			sql.end();
 			return;
 		} else {
 			if (result[0] === undefined) {
 				// If no user with a given userID exists, an error has occured.
 				// There is no circumstance where this should run
-				error({stack: "Error in password checking code"});
+				console.log("Error in password checking code");
+				error();
 				return;
 			}
 			result = result[0]; // Parse the return in a manner where data is more easily accessible
