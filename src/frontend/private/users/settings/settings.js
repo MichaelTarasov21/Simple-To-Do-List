@@ -69,6 +69,10 @@ function deleteAccount() {
 	xhttp.onreadystatechange = function () {
 		if (this.readyState == 4)
 			switch (this.status) {
+				case 200:
+					logout();
+					window.location.reload(true); // Refresh the page to complete deletion
+					break;
 				case 400:
 					alert("Your current password is incorrect");
 					abortDeletion();
@@ -79,8 +83,7 @@ function deleteAccount() {
 					break;
 				case 500:
 					alert("An error has occured");
-				default:
-					window.location.reload(true); // Refresh the page to attempt recovery or complete deletion
+					window.location.reload(true); // Refresh the page to attempt recovery
 			}
 	};
 
