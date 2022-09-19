@@ -2,11 +2,8 @@ import GraphemeSplitter from "./grapheme-splitter.js";
 
 function clearnotepad() {
 	//Resets the note pad back to an empty state
-	const page = document.getElementById("page");
-	page.innerHTML = `
-		<span id="newnote"><button id="addnote" label="addnote">+</button> Add Note</span>
-	`;
-	document.getElementById("addnote").addEventListener("click", insertForm);
+	const page = document.getElementById("notes");
+	page.innerHTML = "";
 }
 
 function reloadMessages() {
@@ -67,9 +64,9 @@ function add_notes() {
 		// The risk here is low since injecting the webpage requires one to have stored a note as the user in the past. However, the solution is not difficult to implement.
 		if (index === 0) {
 			// If the note is the last one. Insert some padding between notes and the new note form.
-			document.getElementById("page").insertAdjacentHTML("afterbegin", `<br /><br />`);
+			document.getElementById("notes").insertAdjacentHTML("afterbegin", `<br /><br />`);
 		}
-		document.getElementById("page").insertAdjacentHTML("afterbegin", `<div class="note" noteID="${note.noteid}"></div>`);
+		document.getElementById("notes").insertAdjacentHTML("afterbegin", `<div class="note" noteID="${note.noteid}"></div>`);
 		const container = document.getElementsByClassName("note")[0];
 		container.innerText = note.message;
 		if (note.flag) {
@@ -231,3 +228,4 @@ function openSettings() {
 getnotes();
 document.getElementById("eraser").addEventListener("click", erase);
 document.getElementById("settingsicon").addEventListener("click", openSettings);
+document.getElementById("addnote").addEventListener("click", insertForm);
