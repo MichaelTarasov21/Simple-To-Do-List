@@ -20,7 +20,7 @@ function createTables() {
 	sql.query(
 		`CREATE TABLE users (
 			userid INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-			administrator BOOLEAN NOT NULL,
+			administrator BOOLEAN NOT NULL DEFAULT 0,
 			email nVARCHAR(255) NULL,
 			username nVARCHAR(255) NOT NULL,
 			real_name nVARCHAR(255) NULL,
@@ -35,11 +35,11 @@ function createTables() {
 			userid INT NOT NULL, 
 			posted_date DATE NOT NULL,
 			message nVARCHAR(1000) NOT NULL,
-			completed BOOLEAN NOT NULL, 
+			completed BOOLEAN NOT NULL DEFAULT 0, 
 			completed_date DATE NULL, 
 			expiration_date DATE NULL,
 			flag nVARCHAR(10) NULL,
-			repeats INT NULL,
+			repeats INT NOT NULL DEFAULT 0,
 			FOREIGN KEY (userid) REFERENCES users(userid))`,
 		function (err) {
 			if (err) throw err;

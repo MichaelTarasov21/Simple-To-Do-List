@@ -62,7 +62,7 @@ function addNote(request, res) {
 	const todaystring = mysql.escape(today.toJSON().slice(0, 10))
 	if (flag === "" && expires === "") {
 		// Neither flag nor expirey is set
-		sql.query(`INSERT INTO tasks(userid, posted_date, message, completed) VALUES (${userid}, ${todaystring}, ${message}, 0)`, function (err) {
+		sql.query(`INSERT INTO tasks(userid, posted_date, message) VALUES (${userid}, ${todaystring}, ${message})`, function (err) {
 			if (err) {
 				res.send(response);
 			} else {
@@ -71,7 +71,7 @@ function addNote(request, res) {
 		});
 	} else if (flag === "") {
 		// Flag is not set, expirey is
-		sql.query(`INSERT INTO tasks(userid, posted_date, message, completed, expiration_date) VALUES (${userid}, ${todaystring}, ${message}, 0, ${expires})`, function (err) {
+		sql.query(`INSERT INTO tasks(userid, posted_date, message, expiration_date) VALUES (${userid}, ${todaystring}, ${message}, ${expires})`, function (err) {
 			if (err) {
 				res.send(response);
 			} else {
@@ -80,7 +80,7 @@ function addNote(request, res) {
 		});
 	} else if (expires === "") {
 		// Expirey is not set, flag is
-		sql.query(`INSERT INTO tasks(userid, posted_date, message, completed, flag) VALUES (${userid}, ${todaystring}, ${message}, 0, ${flag})`, function (err) {
+		sql.query(`INSERT INTO tasks(userid, posted_date, message, flag) VALUES (${userid}, ${todaystring}, ${message}, ${flag})`, function (err) {
 			if (err) {
 				res.send(response);
 			} else {
@@ -89,7 +89,7 @@ function addNote(request, res) {
 		});
 	} else {
 		//Both flag and expirey are set
-		sql.query(`INSERT INTO tasks(userid, posted_date, message, completed, expiration_date, flag) VALUES (${userid}, ${todaystring}, ${message}, 0, ${expires}, ${flag})`, function (err) {
+		sql.query(`INSERT INTO tasks(userid, posted_date, message, expiration_date, flag) VALUES (${userid}, ${todaystring}, ${message}, ${expires}, ${flag})`, function (err) {
 			if (err) {
 				res.send(response);
 			} else {
