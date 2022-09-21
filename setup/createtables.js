@@ -33,12 +33,13 @@ function createTables() {
 		`CREATE TABLE tasks (
 			noteid INT AUTO_INCREMENT PRIMARY KEY NOT NULL, 
 			userid INT NOT NULL, 
-			position INT NULL, 
-			message nVARCHAR(1000) NOT NULL, 
+			posted_date DATE NOT NULL,
+			message nVARCHAR(1000) NOT NULL,
 			completed BOOLEAN NOT NULL, 
 			completed_date DATE NULL, 
-			expiration_date DATE NULL, 
+			expiration_date DATE NULL,
 			flag nVARCHAR(10) NULL,
+			repeats INT NULL,
 			FOREIGN KEY (userid) REFERENCES users(userid))`,
 		function (err) {
 			if (err) throw err;

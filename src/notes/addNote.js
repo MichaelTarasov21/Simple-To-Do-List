@@ -27,8 +27,8 @@ function addNote(request, res) {
 	const message = mysql.escape(data.message.substring(0, 1000)); // Crop messages that are longer than the maximum length
 
 	let expires = data.expires;
+	const today = new Date();
 	if (expires !== "") {
-		const today = new Date();
 		const expireyDate = new Date(expires);
 		if (expireyDate.toString() === "Invalid Date") {
 			// If the date is not a date abandon the task and report an error to the user
@@ -59,9 +59,10 @@ function addNote(request, res) {
 			return;
 		}
 	});
+	const todaystring = mysql.escape(today.toJSON().slice(0, 10))
 	if (flag === "" && expires === "") {
 		// Neither flag nor expirey is set
-		sql.query(`INSERT INTO tasks(userid, message, completed) VALUES (${userid}, ${message}, 0)`, function (err) {
+		sql.query(`INSERT INTO tasks(userid, posted_date, message, completed) VALUES (${userid}, ${todaystring}, ${message}, 0)`, function (err) {
 			if (err) {
 				res.send(response);
 			} else {
@@ -70,7 +71,7 @@ function addNote(request, res) {
 		});
 	} else if (flag === "") {
 		// Flag is not set, expirey is
-		sql.query(`INSERT INTO tasks(userid, message, completed, expiration_date) VALUES (${userid}, ${message}, 0, ${expires})`, function (err) {
+		sql.query(`INSERT INTO tasks(userid, posted_date, message, completed, expiration_date) VALUES (${userid}, ${todaystring}, ${message}, 0, ${expires})`, function (err) {
 			if (err) {
 				res.send(response);
 			} else {
@@ -79,7 +80,7 @@ function addNote(request, res) {
 		});
 	} else if (expires === "") {
 		// Expirey is not set, flag is
-		sql.query(`INSERT INTO tasks(userid, message, completed, flag) VALUES (${userid}, ${message}, 0, ${flag})`, function (err) {
+		sql.query(`INSERT INTO tasks(userid, posted_date, message, completed, flag) VALUES (${userid}, ${todaystring}, ${message}, 0, ${flag})`, function (err) {
 			if (err) {
 				res.send(response);
 			} else {
@@ -88,7 +89,7 @@ function addNote(request, res) {
 		});
 	} else {
 		//Both flag and expirey are set
-		sql.query(`INSERT INTO tasks(userid, message, completed, expiration_date, flag) VALUES (${userid}, ${message}, 0, ${expires}, ${flag})`, function (err) {
+		sql.query(`INSERT INTO tasks(userid, posted_date, message, completed, expiration_date, flag) VALUES (${userid}, ${todaystring}, ${message}, 0, ${expires}, ${flag})`, function (err) {
 			if (err) {
 				res.send(response);
 			} else {
