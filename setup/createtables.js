@@ -39,7 +39,7 @@ function createTables() {
 			completed_date DATE NULL, 
 			expiration_date DATE NULL,
 			flag nVARCHAR(10) NULL,
-			repeats INT NOT NULL DEFAULT 0,
+			repeats TINYINT NOT NULL DEFAULT 0,
 			FOREIGN KEY (userid) REFERENCES users(userid))`,
 		function (err) {
 			if (err) throw err;
