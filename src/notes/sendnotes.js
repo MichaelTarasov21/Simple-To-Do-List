@@ -30,7 +30,7 @@ function sendnotes(request, res) {
 	const date = new Date();
 	const today = mysql.escape(date.toJSON().slice(0, 10));
 
-	sql.query(`SELECT * FROM tasks WHERE (userid=${userid} AND (completed=0 OR completed_date = ${today}))`, function (err, result) {
+	sql.query(`SELECT * FROM tasks WHERE (userid=${userid} AND (completed=0 OR completed_date = ${today}) AND (expiration_date >= ${today} OR expiration_date IS NULL))`, function (err, result) {
 		if (err) {
 			res.send(response);
 			sql.end();
