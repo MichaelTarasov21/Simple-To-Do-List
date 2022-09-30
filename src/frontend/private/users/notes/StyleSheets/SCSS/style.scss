@@ -59,6 +59,10 @@ $pagewidth: 30vw;
 		// Disables hover effect inherited from note class
 		text-decoration: none;
 	}
+	.expiring {
+		color: red;
+		font-weight: bolder;
+	}
 	.completed {
 		text-decoration: line-through;
 		text-decoration-thickness: 4px;
