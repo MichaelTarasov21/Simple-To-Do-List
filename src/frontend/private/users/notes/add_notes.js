@@ -31,16 +31,16 @@ export function add_notes() {
 		}
 	}
 	function sortNote(note, index) {
-		console.log(note.expiration_date);
 		if (note.expiration_date) {
 			if (note.expiration_date.slice(0, 10) === today) {
 				expiring_soon.push(note);
+			} else {
+				regular.push(note);
 			}
 		} else {
 			regular.push(note);
 		}
 
-		console.log(note)
 		if (index + 1 === total_notes) {
 			// Insert some padding between the notes and the new note form.
 			document.getElementById("notes").insertAdjacentHTML("afterbegin", `<br /><br />`);
