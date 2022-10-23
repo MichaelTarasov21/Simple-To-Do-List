@@ -70,6 +70,14 @@ $pagewidth: 30vw;
 	.completed:hover {
 		text-decoration: none;
 	}
+	.optionLine {
+		font-size: 70%;
+		display: flex;
+		justify-content: space-evenly;
+	}
+	.option {
+		visibility: hidden;
+	}
 
 	#newnote {
 		input {
@@ -94,14 +102,6 @@ $pagewidth: 30vw;
 				// Field must be wider on Firefox due to a smaller flag field (see above)
 				width: calc(100% - 1em - 4ch - 3px);
 			}
-		}
-		#expireyLine {
-			font-size: 70%;
-			display: flex;
-			justify-content: space-evenly;
-		}
-		#dateInput {
-			visibility: hidden;
 		}
 		#expireyDate {
 			font-size: 90%;

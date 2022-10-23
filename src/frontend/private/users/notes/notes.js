@@ -75,7 +75,7 @@ function add_notes() {
 		}
 		if (mark) {
 			container.innerText = `🕚 - ${container.innerText}`;
-			container.title = "Expiring soon"
+			container.title = "Expiring soon";
 			container.classList.add("expiring");
 		}
 		if (note.completed) {
@@ -99,8 +99,12 @@ function add_notes() {
 		if (index + 1 === total_notes) {
 			// Insert some padding between the notes and the new note form.
 			document.getElementById("notes").insertAdjacentHTML("afterbegin", `<br /><br />`);
-			regular.forEach(function(note){insertNote(note)});
-			expiring_soon.forEach(function(note){insertNote(note, true)});
+			regular.forEach(function (note) {
+				insertNote(note);
+			});
+			expiring_soon.forEach(function (note) {
+				insertNote(note, true);
+			});
 		}
 	}
 	if (this.readyState == 4 && this.status == 200) {
@@ -139,6 +143,15 @@ function insertForm() {
 		}
 	}
 
+	function showRepetitions() {
+		const repeats = document.getElementById("frequency").value;
+		const repetition_input = document.getElementById("repetitionconfig");
+		if (repeats) {
+			repetition_input.style.visibility = "visible";
+		} else {
+			repetition_input.style.visibility = "";
+		}
+	}
 	function sendForm() {
 		const flag = document.getElementById("flag").value;
 		const message = document.getElementById("message").value;
@@ -181,12 +194,27 @@ function insertForm() {
 			<input type="text" id="flag" name="flag" label="flag" list="emotes"> -
 			<input type="text" id="message" name="message" label="message" placeholder="Your note" maxlength="1000" required>
 		</span>
-		<div id="expireyLine" class="note hoverDisable">
+		<div class="note hoverDisable optionLine">
 			<span>
 				Expires: <input type="checkbox" id="expires"></input>
 			</span>
-			<span id="dateInput">
+			<span id="dateInput"  class="option">
 				On: <input type="date" id="expireyDate"></input>
+			</span>
+		</div>
+		<div class="note hoverDisable optionLine">
+			<span>
+			Repeats:
+			<select id="frequency">
+			<option value="">Never</option>
+			<option value="daily">Daily</option>
+			<option value="weekly">Weekly</option>
+			<option value="monthly">Monthly</option>
+			<option value="yearly">Yearly</option>
+			</select>
+			</span>
+			<span id="repetitionconfig" class="option">
+				Staring: <input type="date" id="startDate"></input>
 			</span>
 		</div>
 		<div id="actionButtons">
@@ -196,6 +224,7 @@ function insertForm() {
 	`;
 	document.getElementById("flag").addEventListener("input", lengthLimit);
 	document.getElementById("expires").addEventListener("click", showDateInput);
+	document.getElementById("frequency").addEventListener("change", showRepetitions);
 	document.getElementById("cancelNewNote").addEventListener("click", hideForm);
 	document.getElementById("addNewNote").addEventListener("click", sendForm);
 }
