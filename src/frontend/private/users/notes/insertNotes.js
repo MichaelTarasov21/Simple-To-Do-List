@@ -2,7 +2,7 @@ import { clearnotepad } from "./clearnotepad.js";
 import { completeNote } from "./completeNote.js";
 import { uncompleteNote } from "./uncompleteNote.js";
 
-export function add_notes() {
+export function insertNotes() {
 	let total_notes;
 	const date = new Date();
 	const today = date.toJSON().slice(0, 10);
