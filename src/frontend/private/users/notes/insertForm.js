@@ -89,10 +89,10 @@ export function insertForm() {
 			Repeats:
 			<select id="frequency">
 			<option value="">Never</option>
-			<option value="daily">Daily</option>
-			<option value="weekly">Weekly</option>
-			<option value="monthly">Monthly</option>
-			<option value="yearly">Yearly</option>
+			<option value="1">Daily</option>
+			<option value="2">Weekly</option>
+			<option value="3">Monthly</option>
+			<option value="4">Yearly</option>
 			</select>
 			</span>
 			<span id="repetitionconfig" class="option">
