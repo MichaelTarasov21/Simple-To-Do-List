@@ -4,6 +4,8 @@ import { reloadMessages } from "./reloadMessages.js";
 export function sendForm() {
 	const flag = document.getElementById("flag").value;
 	const message = document.getElementById("message").value;
+	const repetitions = document.getElementById("frequency").value;
+	const starting = document.getElementById("startDate").value;
 	const expires = document.getElementById("expires").checked;
 	let expireyDate = "";
 	if (expires) {
@@ -29,7 +31,7 @@ export function sendForm() {
 	xhttp.open("POST", "/notes", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.onreadystatechange = reloadMessages;
-	xhttp.send(`method=addnote&flag=${flag}&message=${message}&expires=${expireyDate}`);
+	xhttp.send(`method=addnote&flag=${flag}&message=${message}&repetitions=${repetitions}&starting=&${starting}&expires=${expireyDate}`);
 
 	hideForm();
 }
