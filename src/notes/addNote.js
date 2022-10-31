@@ -1,8 +1,17 @@
 const mysql = require("mysql");
 const config = require("../config.js");
+const insertSQL = require("../insertSQL.js");
 const GraphemeSplitter = require("./grapheme-splitter.js");
 
+function valueIsSet(str = String) {
+	// Returns whether or not a setting is present
+	return str !== "";
+}
+
 function addNote(request, res) {
+	let values = [];
+	let columns = [];
+
 	let response = {
 		status: "Error",
 	};
@@ -13,35 +22,41 @@ function addNote(request, res) {
 		res.send(response);
 		return;
 	}
+	const message = data.message.substring(0, 1000); // Crop messages that are longer than the maximum length
+	values.push(message);
+	columns.push("message");
 
 	const userid = request.session.userid;
-	let flag = "";
-	if (data.flag !== "") {
+	values.push(userid);
+	columns.push("userid");
+
+	if (valueIsSet(data.flag)) {
 		// Sanitize the flag field to leave only a single charachter
 		const splitter = new GraphemeSplitter();
 		const splitvalue = splitter.splitGraphemes(data.flag); // Create an array out of the charachters in the flag box.
-		flag = splitvalue[0];
-		flag = mysql.escape(flag);
+		let flag = splitvalue[0];
+		values.push(flag);
+		columns.push("flag");
 	}
 
-	const message = mysql.escape(data.message.substring(0, 1000)); // Crop messages that are longer than the maximum length
-
-	let expires = data.expires;
-	const today = new Date();
-	if (expires !== "") {
+	if (valueIsSet(data.expires)) {
+		let expires = data.expires;
+		const today = new Date();
 		const expireyDate = new Date(expires);
 		if (expireyDate.toString() === "Invalid Date") {
 			// If the date is not a date abandon the task and report an error to the user
 			res.send(response);
 			return;
+		} else {
+			const expires_in = expireyDate - today;
+			if (expires_in < 0) {
+				// If the note has already expired abandon the task and report an error to the user
+				res.send(response);
+				return;
+			}
+			values.push(expireyDate.toJSON().slice(0, 10));
+			columns.push("expiration_date");
 		}
-		const expires_in = expireyDate - today;
-		if (expires_in < 0) {
-			// If the note has already expired abandon the task and report an error to the user
-			res.send(response);
-			return;
-		}
-		expires = mysql.escape(expireyDate.toJSON().slice(0, 10));
 	}
 
 	const sql = mysql.createConnection({
@@ -59,44 +74,19 @@ function addNote(request, res) {
 			return;
 		}
 	});
-	const todaystring = mysql.escape(today.toJSON().slice(0, 10))
-	if (flag === "" && expires === "") {
-		// Neither flag nor expirey is set
-		sql.query(`INSERT INTO tasks(userid, posted_date, message) VALUES (${userid}, ${todaystring}, ${message})`, function (err) {
-			if (err) {
-				res.send(response);
-			} else {
-				success();
-			}
-		});
-	} else if (flag === "") {
-		// Flag is not set, expirey is
-		sql.query(`INSERT INTO tasks(userid, posted_date, message, expiration_date) VALUES (${userid}, ${todaystring}, ${message}, ${expires})`, function (err) {
-			if (err) {
-				res.send(response);
-			} else {
-				success();
-			}
-		});
-	} else if (expires === "") {
-		// Expirey is not set, flag is
-		sql.query(`INSERT INTO tasks(userid, posted_date, message, flag) VALUES (${userid}, ${todaystring}, ${message}, ${flag})`, function (err) {
-			if (err) {
-				res.send(response);
-			} else {
-				success();
-			}
-		});
-	} else {
-		//Both flag and expirey are set
-		sql.query(`INSERT INTO tasks(userid, posted_date, message, expiration_date, flag) VALUES (${userid}, ${todaystring}, ${message}, ${expires}, ${flag})`, function (err) {
-			if (err) {
-				res.send(response);
-			} else {
-				success();
-			}
-		});
-	}
+	const today = new Date();
+	const todaystring = today.toJSON().slice(0, 10);
+	values.push(todaystring);
+	columns.push("posted_date");
+	sql.query(insertSQL("tasks", columns, values), function (err) {
+		if (err) {
+			res.send(response);
+			sql.end();
+		} else {
+			success();
+		}
+	});
+
 	function success() {
 		sql.end(function () {
 			response.status = "Success";
