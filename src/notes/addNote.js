@@ -12,14 +12,12 @@ function addNote(request, res) {
 	let values = [];
 	let columns = [];
 
-	let response = {
-		status: "Error",
-	};
 	const data = request.body;
 
 	if (data.message === "") {
 		// If the message is non existant abandon the task and report an error to the user
-		res.send(response);
+		res.status(400);
+		res.send();
 		return;
 	}
 	const message = data.message.substring(0, 1000); // Crop messages that are longer than the maximum length
@@ -45,13 +43,15 @@ function addNote(request, res) {
 		const expireyDate = new Date(expires);
 		if (expireyDate.toString() === "Invalid Date") {
 			// If the date is not a date abandon the task and report an error to the user
-			res.send(response);
+			res.status(400);
+			res.send();
 			return;
 		} else {
 			const expires_in = expireyDate - today;
 			if (expires_in < 0) {
 				// If the note has already expired abandon the task and report an error to the user
-				res.send(response);
+				res.status(400);
+				res.send();
 				return;
 			}
 			values.push(expireyDate.toJSON().slice(0, 10));
@@ -70,7 +70,8 @@ function addNote(request, res) {
 	sql.connect(function (err) {
 		if (err) {
 			console.error("error connecting: " + err.stack);
-			res.send(response);
+			res.status(500);
+			res.send();
 			return;
 		}
 	});
@@ -80,7 +81,8 @@ function addNote(request, res) {
 	columns.push("posted_date");
 	sql.query(insertSQL("tasks", columns, values), function (err) {
 		if (err) {
-			res.send(response);
+			res.status(500);
+			res.send();
 			sql.end();
 		} else {
 			success();
@@ -89,8 +91,7 @@ function addNote(request, res) {
 
 	function success() {
 		sql.end(function () {
-			response.status = "Success";
-			res.send(response);
+			res.send();
 		});
 	}
 }
