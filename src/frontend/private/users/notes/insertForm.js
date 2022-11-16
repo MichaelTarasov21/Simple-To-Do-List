@@ -65,7 +65,7 @@ export function insertForm() {
 			</select>
 			</span>
 			<span id="repetitionconfig" class="option">
-				Staring: <input type="date" id="startDate"></input>
+				Starting: <input type="date" id="startDate"></input>
 			</span>
 		</div>
 		<div id="actionButtons">
