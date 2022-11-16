@@ -37,6 +37,11 @@ function addNote(request, res) {
 		columns.push("flag");
 	}
 
+	const today = new Date();
+	const todaystring = today.toJSON().slice(0, 10);
+	values.push(todaystring);
+	columns.push("posted_date");
+
 	if (valueIsSet(data.expires)) {
 		let expires = data.expires;
 		const today = new Date();
@@ -75,10 +80,6 @@ function addNote(request, res) {
 			return;
 		}
 	});
-	const today = new Date();
-	const todaystring = today.toJSON().slice(0, 10);
-	values.push(todaystring);
-	columns.push("posted_date");
 	sql.query(insertSQL("tasks", columns, values), function (err) {
 		if (err) {
 			res.status(500);
