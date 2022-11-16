@@ -31,7 +31,7 @@ export function sendForm() {
 	xhttp.open("POST", "/notes", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.onreadystatechange = reloadMessages;
-	xhttp.send(`method=addnote&flag=${flag}&message=${message}&repetitions=${repetitions}&starting=&${starting}&expires=${expireyDate}`);
+	xhttp.send(`method=addnote&flag=${flag}&message=${message}&repetitions=${repetitions}&starting=${starting}&expires=${expireyDate}`);
 
 	hideForm();
 }
