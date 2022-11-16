@@ -6,6 +6,7 @@ export function reloadMessages() {
 			getnotes();
 		} else {
 			alert("An error has occured. Please try again later.");
+			location.reload() // Reload the page to try to rectify the error.
 		}
 	}
 }
