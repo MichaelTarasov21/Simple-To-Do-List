@@ -2,9 +2,7 @@ const mysql = require("mysql");
 const config = require("../config.js");
 
 function sendnotes(request, res) {
-	// Status defaults to error, if no errors occur it should be changed
 	let response = {
-		status: "Error",
 		notes: [],
 	};
 
@@ -19,6 +17,7 @@ function sendnotes(request, res) {
 	sql.connect(function (err) {
 		if (err) {
 			console.error("error connecting: " + err.stack);
+			res.status(500);
 			res.send(response);
 			return;
 		}
@@ -32,11 +31,11 @@ function sendnotes(request, res) {
 
 	sql.query(`SELECT * FROM tasks WHERE (userid=${userid} AND (completed=0 OR completed_date = ${today}) AND (expiration_date >= ${today} OR expiration_date IS NULL))`, function (err, result) {
 		if (err) {
+			res.status(500);
 			res.send(response);
 			sql.end();
 			return;
 		} else {
-			response.status = "Success";
 			response.notes = result;
 			res.send(response);
 			sql.end();

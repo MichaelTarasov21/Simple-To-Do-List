@@ -52,15 +52,16 @@ export function insertNotes() {
 			});
 		}
 	}
-	if (this.readyState == 4 && this.status == 200) {
-		const response = JSON.parse(this.responseText);
-		if (response.status === "Success") {
+	if (this.readyState == 4) {
+		if (this.status == 200) {
+			const response = JSON.parse(this.responseText);
 			clearnotepad();
 			const notes = response.notes.reverse();
 			total_notes = notes.length;
 			notes.forEach(sortNote);
 		} else {
 			alert("An error has occured. Please try again later.");
+			location.reload();
 		}
 	}
 }
