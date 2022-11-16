@@ -37,14 +37,36 @@ function addNote(request, res) {
 		columns.push("flag");
 	}
 
-	const today = new Date();
+	let today = new Date();
+	if (valueIsSet(data.repetitions)) {
+		const repetitions = data.repetitions;
+		if (repetitions < 0 || repetitions > 4) {
+			// If an invalid set of repetitions is selected abandon the task and report an error to the user
+			res.status(400);
+			res.send();
+			return;
+		}
+
+		values.push(repetitions);
+		columns.push("repeats");
+
+		if (valueIsSet(data.starting)) {
+			today = new Date(data.starting);
+			if (today.toString() === "Invalid Date") {
+				// If the date is not a date abandon the task and report an error to the user
+				res.status(400);
+				res.send();
+				return;
+			}
+		}
+	}
+
 	const todaystring = today.toJSON().slice(0, 10);
 	values.push(todaystring);
 	columns.push("posted_date");
 
 	if (valueIsSet(data.expires)) {
 		let expires = data.expires;
-		const today = new Date();
 		const expireyDate = new Date(expires);
 		if (expireyDate.toString() === "Invalid Date") {
 			// If the date is not a date abandon the task and report an error to the user
@@ -86,15 +108,11 @@ function addNote(request, res) {
 			res.send();
 			sql.end();
 		} else {
-			success();
+			sql.end(function () {
+				res.send();
+			});
 		}
 	});
-
-	function success() {
-		sql.end(function () {
-			res.send();
-		});
-	}
 }
 
 module.exports = addNote;
