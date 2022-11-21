@@ -23,9 +23,7 @@ function notes(request, res) {
 			deleteNote(request, res);
 			break;
 		default:
-			let response = {
-				status: "Error",
-			};
+			res.status(400);
 			res.send(response);
 	}
 }
