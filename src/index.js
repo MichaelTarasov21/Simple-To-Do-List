@@ -14,7 +14,7 @@ const autoRoute = require("./routing/autorouter.js");
 const loginPage = require("./routing/login_page.js");
 const settingsPage = require("./routing/settings_page.js");
 const userPage = require("./routing/user_page.js");
-const userRoute = require("./users/users");
+const userRoute = require("./users/users.js");
 
 const sessionStoreOptions = {
 	host: config.sqlhost,
