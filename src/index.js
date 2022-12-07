@@ -5,11 +5,13 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const favicon = require('serve-favicon')
 const session = require("express-session");
+const schedule = require('node-schedule');
 const MySQLStore = require("express-mysql-session")(session);
 const config = require("./config.js");
 const login = require("./login.js");
 const logout = require("./logout.js");
 const notes = require("./notes/notes.js");
+const renewNotes = require("./notes/renewnotes.js")
 const autoRoute = require("./routing/autorouter.js");
 const loginPage = require("./routing/login_page.js");
 const settingsPage = require("./routing/settings_page.js");
@@ -72,3 +74,5 @@ app.use("/users/", userRoute);
 
 app.post("/login", login);
 app.post("/notes", notes);
+
+const job = schedule.scheduleJob('0 0 0 * * *', renewNotes);
