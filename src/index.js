@@ -3,15 +3,15 @@ const app = express();
 const helmet = require("helmet");
 const bodyParser = require("body-parser");
 const path = require("path");
-const favicon = require('serve-favicon')
+const favicon = require("serve-favicon");
 const session = require("express-session");
-const schedule = require('node-schedule');
+const schedule = require("node-schedule");
 const MySQLStore = require("express-mysql-session")(session);
 const config = require("./config.js");
 const login = require("./login.js");
 const logout = require("./logout.js");
 const notes = require("./notes/notes.js");
-const renewNotes = require("./notes/renewnotes.js")
+const renewNotes = require("./notes/renewnotes.js");
 const autoRoute = require("./routing/autorouter.js");
 const loginPage = require("./routing/login_page.js");
 const settingsPage = require("./routing/settings_page.js");
@@ -60,7 +60,7 @@ app.listen(config.port, config.bindAdress, () => {
 	console.log(`Example app listening on port ${config.port} at ${config.bindAdress}!`);
 });
 
-app.use(favicon(path.join(__dirname, 'frontend', 'favicon.ico')))
+app.use(favicon(path.join(__dirname, "frontend", "favicon.ico")));
 app.get("/", autoRoute);
 app.get("/logout", logout);
 app.use("/login", loginPage);
@@ -75,4 +75,4 @@ app.use("/users/", userRoute);
 app.post("/login", login);
 app.post("/notes", notes);
 
-const job = schedule.scheduleJob('0 0 0 * * *', renewNotes);
+const job = schedule.scheduleJob("0 0 0 * * *", renewNotes);
