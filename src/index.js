@@ -12,10 +12,10 @@ const config = require("./config.js");
 const login = require("./login.js");
 const logout = require("./logout.js");
 const notes = require("./notes/notes.js");
+const settings = require("./renderSettings.js");
 const renewNotes = require("./notes/renewnotes.js");
 const autoRoute = require("./routing/autorouter.js");
 const loginPage = require("./routing/login_page.js");
-const settingsPage = require("./routing/settings_page.js");
 const userPage = require("./routing/user_page.js");
 const userRoute = require("./users/users.js");
 
@@ -57,7 +57,7 @@ app.use(
 	})
 );
 
-app.set('view engine', ejs);
+app.set("view engine", ejs);
 
 app.listen(config.port, config.bindAdress, () => {
 	console.log(`Example app listening on port ${config.port} at ${config.bindAdress}!`);
@@ -70,8 +70,8 @@ app.use("/login", loginPage);
 app.use("/login", express.static(path.join(__dirname, "frontend/public")));
 app.use("/notes", userPage);
 app.use("/notes", express.static(path.join(__dirname, "frontend/private/users/notes")));
-app.use("/settings", settingsPage);
-app.use("/settings", express.static(path.join(__dirname, "frontend/private/users/settings")));
+app.use("/settings", userPage);
+app.use("/settings", settings);
 app.use("/users", userPage);
 app.use("/users/", userRoute);
 

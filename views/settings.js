@@ -150,26 +150,3 @@ function abortDeletion() {
 document.getElementById("acknowledgement").addEventListener("input", checkConfirmation);
 document.getElementById("cancelDeletion").addEventListener("click", abortDeletion);
 document.getElementById("confirm").addEventListener("click", deleteAccount);
-
-function getEmail() {
-	// Get the email value already on file for this account
-	const xhttp = new XMLHttpRequest();
-
-	xhttp.open("GET", "/users/email", true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-	xhttp.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
-			// Set the email field value to the email on file for a user account
-			const response = JSON.parse(this.responseText);
-			document.getElementById("email").value = response[0].email;
-			document.getElementById("email").setvalue = response[0].email;
-		} else if (this.readyState == 4 && this.status == 500) {
-			alert("An error has occured");
-			window.location.reload(true); // Refresh the page to attempt recovery
-		}
-	};
-	xhttp.send();
-}
-
-getEmail();
