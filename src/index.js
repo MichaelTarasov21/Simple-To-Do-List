@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const favicon = require("serve-favicon");
 const session = require("express-session");
+const ejs = require("ejs");
 const schedule = require("node-schedule");
 const MySQLStore = require("express-mysql-session")(session);
 const config = require("./config.js");
@@ -55,6 +56,8 @@ app.use(
 		extended: true,
 	})
 );
+
+app.set('view engine', ejs);
 
 app.listen(config.port, config.bindAdress, () => {
 	console.log(`Example app listening on port ${config.port} at ${config.bindAdress}!`);
