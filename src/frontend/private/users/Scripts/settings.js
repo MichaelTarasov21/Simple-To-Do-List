@@ -92,7 +92,7 @@ function deleteAccount() {
 
 function closeSettings() {
 	// Close the settings window and return to notes
-	window.location.pathname = window.location.pathname + "../";
+	window.location.pathname = window.location.pathname + "/../";
 }
 
 function parseSettings() {
