@@ -17,7 +17,8 @@ export function sendForm() {
 		const today = new Date();
 		const expiresOn = new Date(expireyDate);
 		const timeReamining = expiresOn - today;
-		if (timeReamining < 0) {
+		if (timeReamining <= -86400000) {
+			// 86400000 is the amount of milliseconds in a day
 			alert("It seems your note has already expired. Please double check the date.");
 			return;
 		}

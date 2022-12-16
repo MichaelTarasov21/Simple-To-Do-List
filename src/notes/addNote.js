@@ -75,7 +75,8 @@ function addNote(request, res) {
 			return;
 		} else {
 			const expires_in = expireyDate - today;
-			if (expires_in < 0) {
+			if (expires_in <= -86400000) {
+				// 86400000 is the amount of milliseconds in a day
 				// If the note has already expired abandon the task and report an error to the user
 				res.status(400);
 				res.send();
