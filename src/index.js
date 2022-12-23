@@ -73,7 +73,7 @@ app.use("/notes", express.static(path.join(__dirname, "frontend/private/users/no
 app.use("/settings", userPage);
 app.use("/settings", settings);
 app.use("/users", userPage);
-app.use("/users/", userRoute);
+app.use("/users", userRoute);
 
 app.post("/login", login);
 app.post("/notes", notes);
