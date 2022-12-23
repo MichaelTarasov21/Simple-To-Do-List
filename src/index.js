@@ -64,14 +64,20 @@ app.listen(config.port, config.bindAdress, () => {
 });
 
 app.use(favicon(path.join(__dirname, "frontend", "favicon.ico")));
+
 app.get("/", autoRoute);
+
 app.get("/logout", logout);
+
 app.use("/login", loginPage);
 app.use("/login", express.static(path.join(__dirname, "frontend/public")));
+
 app.use("/notes", userPage);
 app.use("/notes", express.static(path.join(__dirname, "frontend/private/users/notes")));
+
 app.use("/settings", userPage);
 app.use("/settings", settings);
+
 app.use("/users", userPage);
 app.use("/users", userRoute);
 
