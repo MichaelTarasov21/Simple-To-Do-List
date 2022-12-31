@@ -25,3 +25,18 @@ body {
 
 	color: white;
 }
+
+#admin_sections {
+	width: 100%;
+	position: relative;
+	top: 10vh;
+	display: flex;
+	justify-content: space-around;
+
+	.section {
+		height: 10vh;
+		width: 20vw;
+		font-size: 300%;
+		color: white;
+	}
+}
