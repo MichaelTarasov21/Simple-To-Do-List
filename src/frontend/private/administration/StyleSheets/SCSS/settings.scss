@@ -1,0 +1,27 @@
+html {
+	font-size: 62.5%;
+	font-family: "Times New Roman", Times, serif;
+	color: black;
+}
+html,
+body {
+	margin: 0;
+}
+
+$app-background: #26303a;
+
+body {
+	background-color: $app-background;
+}
+
+#close {
+	position: fixed;
+	top: 1vh;
+	right: 1vw;
+
+	font-size: 400%;
+
+	cursor: pointer;
+
+	color: white;
+}
