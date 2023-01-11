@@ -28,15 +28,23 @@ body {
 
 #admin_sections {
 	width: 100%;
+
 	position: relative;
 	top: 10vh;
+
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-around;
 
 	.section {
+		flex-basis: 20.001%; // Sets the maximum amount of sections per row to 4
+
 		height: 10vh;
 		width: 20vw;
+
 		font-size: 300%;
 		color: white;
+
+		text-align: center;
 	}
 }
