@@ -37,18 +37,37 @@ body {
 	justify-content: space-around;
 
 	.section {
-		flex-basis: 20.001%; // Sets the maximum amount of sections per row to 4
-
-		height: 10vh;
-		width: 20vw;
+		height: 10vw;
+		width: 10vw;
 
 		font-size: 300%;
 		color: white;
 
 		text-align: center;
+
+		border: 3px solid white;
+
+		cursor: pointer;
+
+		display: flex;
+		justify-content: center;
+
+		flex-direction: column;
+	}
+
+	.section:hover {
+		border: 5px solid white;
+	}
+
+	.section:active {
+		border: 7px solid white;
 	}
 
 	.icon {
+		position: relative;
+		right: 100%;
+		transform: translateX(50%);
+
 		width: 15vw;
 		height: 7vh;
 	}
