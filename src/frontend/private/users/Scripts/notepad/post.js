@@ -5,7 +5,10 @@ export function post(path = String, data = String) {
 		function checkReply() {
 			if (this.readyState == 4) {
 				if (this.status == 200) {
-					const response = JSON.parse(this.responseText);
+					let response;
+					if (this.responseText.length > 0) {
+						response = JSON.parse(this.responseText);
+					}
 					resolve(response);
 				} else {
 					// Pass to error handler
