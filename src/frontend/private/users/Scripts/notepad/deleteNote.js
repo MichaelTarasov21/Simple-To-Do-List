@@ -1,14 +1,10 @@
-import { reloadMessages } from "./reloadMessages.js";
 import { stopErasing } from "./stopErasing.js";
+import { getnotes } from "./getnotes.js";
+import { post } from "./post.js";
 
-export function deleteNote(event) {
+export async function deleteNote(event) {
 	stopErasing();
 	const noteid = event.target.getAttribute("noteid");
-
-	const xhttp = new XMLHttpRequest();
-
-	xhttp.open("POST", "/notes", true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.onreadystatechange = reloadMessages;
-	xhttp.send(`method=deletenote&note=${parseInt(noteid)}`);
+	await post("/notes", `method=deletenote&note=${parseInt(noteid)}`);
+	getnotes();
 }

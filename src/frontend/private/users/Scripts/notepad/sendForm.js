@@ -1,7 +1,8 @@
 import { hideForm } from "./hideForm.js";
-import { reloadMessages } from "./reloadMessages.js";
+import { getnotes } from "./getnotes.js";
+import { post } from "./post.js";
 
-export function sendForm() {
+export async function sendForm() {
 	const flag = document.getElementById("flag").value;
 	const message = document.getElementById("message").value;
 	const repetitions = document.getElementById("frequency").value;
@@ -28,11 +29,9 @@ export function sendForm() {
 		return;
 	}
 
-	const xhttp = new XMLHttpRequest();
-	xhttp.open("POST", "/notes", true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.onreadystatechange = reloadMessages;
-	xhttp.send(`method=addnote&flag=${flag}&message=${message}&repetitions=${repetitions}&starting=${starting}&expires=${expireyDate}`);
+	await post("/notes", `method=addnote&flag=${flag}&message=${message}&repetitions=${repetitions}&starting=${starting}&expires=${expireyDate}`);
+
+	getnotes();
 
 	hideForm();
 }

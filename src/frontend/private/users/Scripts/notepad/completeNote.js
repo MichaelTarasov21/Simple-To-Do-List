@@ -1,12 +1,9 @@
-import { reloadMessages } from "./reloadMessages.js";
+import { getnotes } from "./getnotes.js";
+import { post } from "./post.js";
 
-export function completeNote(event) {
+export async function completeNote(event) {
 	const noteid = event.target.getAttribute("noteid");
 
-	const xhttp = new XMLHttpRequest();
-
-	xhttp.open("POST", "/notes", true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.onreadystatechange = reloadMessages;
-	xhttp.send(`method=completenote&note=${parseInt(noteid)}`);
+	await post("/notes", `method=completenote&note=${parseInt(noteid)}`);
+	getnotes();
 }

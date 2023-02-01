@@ -2,7 +2,7 @@ import { clearnotepad } from "./clearnotepad.js";
 import { completeNote } from "./completeNote.js";
 import { uncompleteNote } from "./uncompleteNote.js";
 
-export function insertNotes() {
+export function insertNotes(data = JSON) {
 	let total_notes;
 	const date = new Date();
 	const today = date.toJSON().slice(0, 10);
@@ -52,16 +52,9 @@ export function insertNotes() {
 			});
 		}
 	}
-	if (this.readyState == 4) {
-		if (this.status == 200) {
-			const response = JSON.parse(this.responseText);
-			clearnotepad();
-			const notes = response.notes.reverse();
-			total_notes = notes.length;
-			notes.forEach(sortNote);
-		} else {
-			alert("An error has occured. Please try again later.");
-			location.reload();
-		}
-	}
+
+	clearnotepad();
+	const notes = data.notes.reverse();
+	total_notes = notes.length;
+	notes.forEach(sortNote);
 }
