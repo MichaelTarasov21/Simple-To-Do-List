@@ -69,6 +69,8 @@ app.use(favicon(path.join(__dirname, "frontend", "favicon.ico")));
 
 app.get("/", autoRoute);
 
+app.use("/scripts", express.static(path.join(__dirname, "frontend/public/Scripts")));
+
 app.get("/logout", logout);
 
 app.use("/login", loginPage);

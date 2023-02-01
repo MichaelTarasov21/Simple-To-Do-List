@@ -1,5 +1,7 @@
+// post function defined in publicly hosted folder /Scripts and imported through html
 let form_sent = false;
-function login() {
+
+async function login() {
 	if (form_sent) {
 		return;
 	}
@@ -7,21 +9,12 @@ function login() {
 	const username = document.getElementById("username").value;
 	const password = document.getElementById("password").value;
 
-	const xhttp = new XMLHttpRequest();
+	const response = await post("/login", `username=${username}&password=${password}`);
 
-	xhttp.open("POST", "/login", true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.onreadystatechange = process_result;
-	xhttp.send(`username=${username}&password=${password}`);
-}
-function process_result() {
-	if (this.readyState == 4 && this.status == 200) {
-		const response = JSON.parse(this.responseText);
-		if (response.status === "Success") {
-			window.location.pathname = window.location.pathname + "../"; // Redirects while keeping hidden path hidden
-		} else {
-			failedLogin();
-		}
+	if (response.status === "Success") {
+		window.location.pathname = window.location.pathname + "../"; // Redirects while keeping hidden path hidden
+	} else {
+		failedLogin();
 	}
 }
 function failedLogin() {
