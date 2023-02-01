@@ -1,7 +1,6 @@
 import { clearnotepad } from "./clearnotepad.js";
 import { completeNote } from "./completeNote.js";
 import { uncompleteNote } from "./uncompleteNote.js";
-import { post } from "./post.js";
 
 export async function getnotes() {
 	let total_notes;

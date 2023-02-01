@@ -1,6 +1,5 @@
 import { stopErasing } from "./stopErasing.js";
 import { getnotes } from "./getnotes.js";
-import { post } from "./post.js";
 
 export async function deleteNote(event) {
 	stopErasing();

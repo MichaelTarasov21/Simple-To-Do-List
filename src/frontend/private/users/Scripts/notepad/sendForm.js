@@ -1,6 +1,5 @@
 import { hideForm } from "./hideForm.js";
 import { getnotes } from "./getnotes.js";
-import { post } from "./post.js";
 
 export async function sendForm() {
 	const flag = document.getElementById("flag").value;
