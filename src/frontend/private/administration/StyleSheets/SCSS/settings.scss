@@ -2,16 +2,14 @@ html {
 	font-size: 62.5%;
 	font-family: "Times New Roman", Times, serif;
 	color: black;
-}
-html,
-body {
-	margin: 0;
+	overflow-x: hidden;
 }
 
 $app-background: #26303a;
 
 body {
 	background-color: $app-background;
+	margin: 0;
 }
 
 #close {
@@ -36,6 +34,8 @@ body {
 	flex-wrap: wrap;
 	justify-content: space-around;
 
+	$section-border: 3px;
+
 	.section {
 		height: 10vw;
 		width: 10vw;
@@ -45,7 +45,7 @@ body {
 
 		text-align: center;
 
-		border: 3px solid white;
+		border: $section-border solid white;
 
 		cursor: pointer;
 
@@ -56,11 +56,17 @@ body {
 	}
 
 	.section:hover {
-		border: 5px solid white;
+		$new-section-border: 5px;
+		border: $new-section-border solid white;
+		// Prevent movement when border grows
+		margin: calc($section-border - $new-section-border);
 	}
 
 	.section:active {
-		border: 7px solid white;
+		$new-section-border: 7px;
+		border: $new-section-border solid white;
+		// Prevent movement when border grows
+		margin: calc($section-border - $new-section-border);
 	}
 
 	.icon {
