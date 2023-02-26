@@ -18,5 +18,5 @@ function closeSettings() {
 	window.location.pathname = window.location.pathname + "/../";
 }
 
-//document.getElementById("logout").addEventListener("click", logout);
+document.getElementById("logout").addEventListener("click", logout);
 document.getElementById("close").addEventListener("click", closeSettings);
