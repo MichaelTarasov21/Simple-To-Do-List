@@ -13,7 +13,7 @@ function checkPassword(userid = Number, password = String, same = Function, diff
 		charset: "utf8mb4",
 	});
 
-	sql.query(`SELECT * FROM To_Do_List.users WHERE userid = ${userid}`, function (err, result) {
+	sql.query(`SELECT password FROM users WHERE userid = ${userid}`, function (err, result) {
 		if (err) {
 			console.error("Error in password update: " + err.stack);
 			error();
