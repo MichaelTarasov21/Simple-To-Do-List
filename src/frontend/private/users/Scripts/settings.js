@@ -21,6 +21,7 @@ async function setEmail() {
 	} else {
 		alert("Invalid email entered");
 	}
+	document.getElementById("email").setvalue = email;
 }
 
 function setPassword() {
