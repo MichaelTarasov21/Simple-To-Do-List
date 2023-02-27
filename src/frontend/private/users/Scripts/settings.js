@@ -17,33 +17,38 @@ async function setEmail() {
 	const email = document.getElementById("email").value;
 
 	if ((/.+@.+\..+/.test(email) || email === "") && email.length < 255) {
-		await post("/users/email", `email=${email}`);
+		try {
+			await post("/users/email", `email=${email}`);
+			document.getElementById("email").setAttribute("value", email);
+		} catch (err) {
+			console.log(err);
+			alert("An error has occured");
+			window.location.reload(true); // Refresh the page to attempt recovery
+		}
 	} else {
 		alert("Invalid email entered");
 	}
 	document.getElementById("email").setvalue = email;
 }
 
-function setPassword() {
+async function setPassword() {
 	const oldpassword = document.getElementById("oldPassword").value;
 	const newpassword = document.getElementById("newPassword").value;
 
 	const xhttp = new XMLHttpRequest();
-
-	xhttp.open("POST", "/users/password", true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-	xhttp.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
-			console.log("Set");
-		} else if (this.readyState == 4 && this.status == 500) {
-			alert("An error has occured");
-			window.location.reload(true); // Refresh the page to attempt recovery
-		} else if (this.readyState == 4 && this.status == 400) {
-			alert("Your current password is incorrect");
+	try {
+		await post("/users/password", `oldpassword=${oldpassword}&newpassword=${newpassword}`);
+	} catch (err) {
+		console.log(err);
+		switch (err.message) {
+			case "400":
+				alert("Your current password is incorrect");
+				break;
+			case "500":
+				alert("An error has occured");
+				window.location.reload(true); // Refresh the page to attempt recovery
 		}
-	};
-	xhttp.send(`oldpassword=${oldpassword}&newpassword=${newpassword}`);
+	}
 }
 
 function deleteAccount() {
@@ -84,7 +89,7 @@ function closeSettings() {
 
 function parseSettings() {
 	const email = document.getElementById("email").value;
-	const originalEmail = document.getElementById("email").setvalue;
+	const originalEmail = document.getElementById("email").getAttribute("value");
 	const oldpassword = document.getElementById("oldPassword").value;
 	const newpassword = document.getElementById("newPassword").value;
 
