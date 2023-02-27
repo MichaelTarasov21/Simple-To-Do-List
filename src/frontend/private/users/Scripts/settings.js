@@ -51,35 +51,29 @@ async function setPassword() {
 	}
 }
 
-function deleteAccount() {
+async function deleteAccount() {
 	const password = document.getElementById("oldPassword").value;
 
-	const xhttp = new XMLHttpRequest();
-
-	xhttp.open("POST", "/users/delete", true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.onreadystatechange = function () {
-		if (this.readyState == 4)
-			switch (this.status) {
-				case 200:
-					logout();
-					window.location.reload(true); // Refresh the page to complete deletion
-					break;
-				case 400:
-					alert("Your current password is incorrect");
-					abortDeletion();
-					break;
-				case 418:
-					alert("You are the last administrator. Make sure that there is at least one other admin account before deleting this one.");
-					abortDeletion();
-					break;
-				case 500:
-					alert("An error has occured");
-					window.location.reload(true); // Refresh the page to attempt recovery
-			}
-	};
-
-	xhttp.send(`password=${password}`);
+	try {
+		await post("/users/delete", `password=${password}`);
+		logout();
+	} catch (err) {
+		console.log(err);
+		switch (err.message) {
+			case "400":
+				alert("Your current password is incorrect");
+				abortDeletion();
+				break;
+			case "418":
+				// Left behind in case an admin gets to this page. Admins should be routed to the admin panel
+				alert("You are the last administrator. Make sure that there is at least one other admin account before deleting this one.");
+				abortDeletion();
+				break;
+			case "500":
+				alert("An error has occured");
+				window.location.reload(true); // Refresh the page to attempt recovery
+		}
+	}
 }
 
 function closeSettings() {
