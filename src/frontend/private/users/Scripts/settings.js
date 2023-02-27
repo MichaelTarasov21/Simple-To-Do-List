@@ -13,25 +13,11 @@ function logout() {
 	xhttp.send();
 }
 
-function setEmail() {
+async function setEmail() {
 	const email = document.getElementById("email").value;
 
 	if ((/.+@.+\..+/.test(email) || email === "") && email.length < 255) {
-		const xhttp = new XMLHttpRequest();
-
-		xhttp.open("POST", "/users/email", true);
-		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-		xhttp.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
-				document.getElementById("email").setvalue = email;
-				console.log("Set");
-			} else if (this.readyState == 4 && this.status == 500) {
-				alert("An error has occured");
-				window.location.reload(true); // Refresh the page to attempt recovery
-			}
-		};
-		xhttp.send(`email=${email}`);
+		await post("/users/email", `email=${email}`);
 	} else {
 		alert("Invalid email entered");
 	}
