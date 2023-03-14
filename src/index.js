@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const favicon = require("serve-favicon");
 const session = require("express-session");
+const lusca = require('lusca')
 const ejs = require("ejs");
 const schedule = require("node-schedule");
 const MySQLStore = require("express-mysql-session")(session);
@@ -58,6 +59,16 @@ app.use(
 		extended: true,
 	})
 );
+
+app.use(lusca({
+    csrf: true,
+    xframe: 'SAMEORIGIN',
+    p3p: 'ABCDEF',
+    hsts: {maxAge: 31536000, includeSubDomains: true, preload: true},
+    xssProtection: true,
+    nosniff: true,
+    referrerPolicy: 'same-origin'
+}));
 
 app.set("view engine", ejs);
 
