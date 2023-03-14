@@ -8,9 +8,11 @@ async function login() {
 	form_sent = true;
 	const username = document.getElementById("username").value;
 	const password = document.getElementById("password").value;
-
-	const response = await post("/login", `username=${username}&password=${password}`);
-
+	try {
+		const response = await post("/login", `username=${username}&password=${password}`);
+	} catch {
+		failedLogin();
+	}
 	if (response.status === "Success") {
 		window.location.pathname = window.location.pathname + "../"; // Redirects while keeping hidden path hidden
 	} else {
