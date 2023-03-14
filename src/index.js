@@ -19,7 +19,7 @@ const autoRoute = require("./routing/autorouter.js");
 const loginPage = require("./routing/login_page.js");
 const userPage = require("./routing/user_page.js");
 const adminPage = require("./routing/admin_page.js");
-const userRoute = require("./users/users.js");
+const userRoute = require("./users/router.js");
 const adminRoute = require("./administration/adminRoutes.js");
 
 const sessionStoreOptions = {
