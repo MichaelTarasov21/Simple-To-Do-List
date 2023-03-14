@@ -5,12 +5,11 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const favicon = require("serve-favicon");
 const session = require("express-session");
-const lusca = require('lusca')
+const lusca = require("lusca");
 const ejs = require("ejs");
 const schedule = require("node-schedule");
 const MySQLStore = require("express-mysql-session")(session);
 const config = require("./config.js");
-const login = require("./login.js");
 const logout = require("./logout.js");
 const notes = require("./notes/notes.js");
 const settings = require("./renderSettings.js");
@@ -19,6 +18,7 @@ const autoRoute = require("./routing/autorouter.js");
 const loginPage = require("./routing/login_page.js");
 const userPage = require("./routing/user_page.js");
 const adminPage = require("./routing/admin_page.js");
+const publicRoute = require("./public/router.js")
 const userRoute = require("./users/router.js");
 const adminRoute = require("./administration/adminRoutes.js");
 
@@ -60,15 +60,17 @@ app.use(
 	})
 );
 
-app.use(lusca({
-    csrf: true,
-    xframe: 'SAMEORIGIN',
-    p3p: 'ABCDEF',
-    hsts: {maxAge: 31536000, includeSubDomains: true, preload: true},
-    xssProtection: true,
-    nosniff: true,
-    referrerPolicy: 'same-origin'
-}));
+app.use(
+	lusca({
+		csrf: true,
+		xframe: "SAMEORIGIN",
+		p3p: "ABCDEF",
+		hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
+		xssProtection: true,
+		nosniff: true,
+		referrerPolicy: "same-origin",
+	})
+);
 
 app.set("view engine", ejs);
 
@@ -85,7 +87,7 @@ app.use("/scripts", express.static(path.join(__dirname, "frontend/public/Scripts
 app.get("/logout", logout);
 
 app.use("/login", loginPage);
-app.use("/login", express.static(path.join(__dirname, "frontend/public")));
+app.use("/login", publicRoute);
 
 app.use("/notes", userPage);
 app.use("/notes", express.static(path.join(__dirname, "frontend/private/users/notes")));
@@ -96,7 +98,6 @@ app.use("/settings", settings);
 app.use("/users", userPage);
 app.use("/users", userRoute);
 
-app.post("/login", login);
 app.post("/notes", notes);
 
 app.use("/admin", adminPage);

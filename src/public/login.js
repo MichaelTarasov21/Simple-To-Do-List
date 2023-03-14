@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const mysql = require("mysql");
-const config = require("./config.js");
+const config = require("../config.js");
 
 function login(data, res) {
 	const username = mysql.escape(String(data.body.username));
