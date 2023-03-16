@@ -68,7 +68,9 @@ function renewNotes() {
 		}
 	}
 
-	sql.query(`SELECT noteid, posted_date, expiration_date, repeats FROM tasks WHERE (completed = 1 AND repeats != 0 AND completed_date != ${mysql.escape(today.toJSON().slice(0, 10))})`, function (err, result) {
+	const sqltoday = mysql.escape(today.toJSON().slice(0, 10))
+	
+	sql.query(`SELECT noteid, posted_date, expiration_date, repeats FROM tasks WHERE (((completed = 1 AND completed_date != ${sqltoday}) OR expiration_date < ${sqltoday}) AND repeats != 0)`, function (err, result) {
 		if (err) {
 			console.error("error in SQL Query: " + err.stack);
 			return;
