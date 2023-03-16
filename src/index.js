@@ -19,6 +19,7 @@ const loginPage = require("./routing/login_page.js");
 const userPage = require("./routing/user_page.js");
 const adminPage = require("./routing/admin_page.js");
 const renderLogin = require("./public/renderLogin.js");
+const renderNotes = require("./users/renderNotes.js");
 const login = require("./public/login.js");
 const publicRoute = require("./public/router.js");
 const userRoute = require("./users/router.js");
@@ -93,7 +94,7 @@ app.post("/login", login);
 app.use("/public", publicRoute);
 
 app.use("/notes", userPage);
-app.use("/notes", express.static(path.join(__dirname, "frontend/private/users/notes")));
+app.use("/notes", renderNotes);
 
 app.use("/settings", userPage);
 app.use("/settings", settings);

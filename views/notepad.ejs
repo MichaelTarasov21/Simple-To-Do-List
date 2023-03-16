@@ -5,13 +5,14 @@
 		<title>To-do List</title>
 		<link rel="stylesheet" href="/users/styles/notes.css" />
 		<link id="deletion" rel="stylesheet" disabled="true" href="/users/styles/deletion.css" />
+		<span id="csrf" csrf="<%=_csrf%>" style="display: none"> </span>
 	</head>
 	<body>
 		<div id="page">
 			<div id="notes"></div>
 			<span id="newnote"><button id="addnote" label="addnote">+</button> Add Note</span>
 		</div>
-		<img id="eraser" src="/users/assets/eraser.png" alt="erase"/>
+		<img id="eraser" src="/users/assets/eraser.png" alt="erase" />
 		<img id="settingsicon" src="/users/assets/gear.png" alt="settings" />
 	</body>
 	<script src="/public/scripts/post.js"></script>
