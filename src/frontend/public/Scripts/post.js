@@ -1,4 +1,4 @@
-function post(path = String, data = String, csrf = String) {
+function post(path = String, data = String) {
 	// Sends a post request to the specified path containg specified data
 	// Returns a promise that resolves to the return message when a message is received
 	return new Promise(function (resolve, reject) {
@@ -16,6 +16,8 @@ function post(path = String, data = String, csrf = String) {
 				}
 			}
 		}
+
+		const csrf = document.getElementById("csrf").getAttribute("csrf");
 
 		const xhttp = new XMLHttpRequest();
 		xhttp.open("POST", path, true);

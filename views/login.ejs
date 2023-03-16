@@ -4,6 +4,7 @@
 		<meta charset="UTF-8" />
 		<title>To-do List</title>
 		<link rel="stylesheet" href="/login/styles/login.css" />
+		<span id="csrf" csrf="<%=_csrf%>" style="display: none"> </span>
 	</head>
 	<body>
 		<span id="logo"><img src="/login/Assets/Images/Notepad.png" />To-Do List</span>
@@ -19,7 +20,7 @@
 				<label for="password">Password:</label>
 				<input type="password" id="password" name="password" required />
 				<br />
-				<input type="submit" id="login" value="Login" csrf="<%=_csrf%>" />
+				<input type="submit" id="login" value="Login" />
 			</div>
 		</div>
 		<script src="/login/Scripts/post.js"></script>

@@ -8,9 +8,8 @@ async function login() {
 	form_sent = true;
 	const username = document.getElementById("username").value;
 	const password = document.getElementById("password").value;
-	const csrf = document.getElementById("login").getAttribute("csrf");
 	try {
-		response = await post("/login", `username=${username}&password=${password}`, csrf);
+		response = await post("/login", `username=${username}&password=${password}`);
 	} catch {
 		failedLogin();
 	}
