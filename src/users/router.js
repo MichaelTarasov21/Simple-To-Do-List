@@ -8,8 +8,8 @@ const accountDeletion = require("./accountDeletion.js");
 router.post("/email", setEmail);
 router.post("/password", setPassword);
 router.post("/delete", accountDeletion);
-router.use("/styles", express.static(path.join(__dirname, "../frontend/private/users/StyleSheets/CSS")));
 router.use("/scripts", express.static(path.join(__dirname, "../frontend/private/users/Scripts")));
+router.use("/styles", express.static(path.join(__dirname, "../frontend/private/users/StyleSheets/CSS")));
 router.use("/assets", express.static(path.join(__dirname, "../frontend/private/users/Assets")));
 
 module.exports = router;
