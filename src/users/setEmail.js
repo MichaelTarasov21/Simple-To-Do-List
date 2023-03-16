@@ -5,8 +5,15 @@ function setEmail(req, res) {
 	const userid = req.session.userid;
 	const email = req.body.email;
 
-	if ((!/^.+@.+\..+$/.test(email) && email !== "") || email.length > 255) {
-		// If the email is not an email or is too long set an error code, send a response, and abort the function
+	if (email.length < 255 && email.length > 0) {
+		if (!/^.+@.+\..+$/.test(email)) {
+			// If the email is not an email set an error code, send a response, and abort the function
+			res.status(400); // Set status code to client error
+			res.send();
+			return;
+		}
+	} else {
+		// If the email is too long set an error code, send a response, and abort the function
 		res.status(400); // Set status code to client error
 		res.send();
 		return;
