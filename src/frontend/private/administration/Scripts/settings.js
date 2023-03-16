@@ -13,10 +13,4 @@ function logout() {
 	xhttp.send();
 }
 
-function closeSettings() {
-	// Close the settings window and return to notes
-	window.location.pathname = window.location.pathname + "/../";
-}
-
 document.getElementById("logout").addEventListener("click", logout);
-document.getElementById("close").addEventListener("click", closeSettings);

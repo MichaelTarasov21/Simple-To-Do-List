@@ -76,11 +76,6 @@ async function deleteAccount() {
 	}
 }
 
-function closeSettings() {
-	// Close the settings window and return to notes
-	window.location.pathname = window.location.pathname + "/../";
-}
-
 function parseSettings() {
 	const email = document.getElementById("email").value;
 	const originalEmail = document.getElementById("email").getAttribute("value");
@@ -110,7 +105,6 @@ function confirmDeletion() {
 }
 
 document.getElementById("logout").addEventListener("click", logout);
-document.getElementById("close").addEventListener("click", closeSettings);
 document.getElementById("update").addEventListener("click", parseSettings);
 document.getElementById("delete").addEventListener("click", confirmDeletion);
 
