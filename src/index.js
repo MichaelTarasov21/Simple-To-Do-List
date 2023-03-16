@@ -18,7 +18,9 @@ const autoRoute = require("./routing/autorouter.js");
 const loginPage = require("./routing/login_page.js");
 const userPage = require("./routing/user_page.js");
 const adminPage = require("./routing/admin_page.js");
-const publicRoute = require("./public/router.js")
+const renderLogin = require("./public/renderLogin.js");
+const login = require("./public/login.js");
+const publicRoute = require("./public/router.js");
 const userRoute = require("./users/router.js");
 const adminRoute = require("./administration/adminRoutes.js");
 
@@ -82,12 +84,13 @@ app.use(favicon(path.join(__dirname, "frontend", "favicon.ico")));
 
 app.get("/", autoRoute);
 
-app.use("/scripts", express.static(path.join(__dirname, "frontend/public/Scripts")));
-
 app.get("/logout", logout);
 
 app.use("/login", loginPage);
-app.use("/login", publicRoute);
+app.get("/login", renderLogin);
+app.post("/login", login);
+
+app.use("/public", publicRoute);
 
 app.use("/notes", userPage);
 app.use("/notes", express.static(path.join(__dirname, "frontend/private/users/notes")));
