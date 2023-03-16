@@ -9,7 +9,7 @@ export async function getnotes() {
 	const expiring_soon = [];
 	const regular = [];
 
-	let data = await post("/notes", `method=getnotes`);
+	let data = await post("/users/notes", `method=getnotes`);
 
 	function insertNote(note, mark = false) {
 		// Insert a note div then fill in the content. This is to prevent javascript injection into the webpage.

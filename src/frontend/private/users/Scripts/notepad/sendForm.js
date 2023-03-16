@@ -28,7 +28,7 @@ export async function sendForm() {
 		return;
 	}
 
-	await post("/notes", `method=addnote&flag=${flag}&message=${message}&repetitions=${repetitions}&starting=${starting}&expires=${expireyDate}`);
+	await post("/users/notes", `method=addnote&flag=${flag}&message=${message}&repetitions=${repetitions}&starting=${starting}&expires=${expireyDate}`);
 
 	getnotes();
 

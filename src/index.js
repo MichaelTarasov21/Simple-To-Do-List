@@ -11,9 +11,8 @@ const schedule = require("node-schedule");
 const MySQLStore = require("express-mysql-session")(session);
 const config = require("./config.js");
 const logout = require("./logout.js");
-const notes = require("./notes/notes.js");
 const settings = require("./renderSettings.js");
-const renewNotes = require("./notes/renewnotes.js");
+const renewNotes = require("./renewnotes.js");
 const autoRoute = require("./routing/autorouter.js");
 const loginPage = require("./routing/login_page.js");
 const userPage = require("./routing/user_page.js");
@@ -94,15 +93,13 @@ app.post("/login", login);
 app.use("/public", publicRoute);
 
 app.use("/notes", userPage);
-app.use("/notes", renderNotes);
+app.get("/notes", renderNotes);
 
 app.use("/settings", userPage);
 app.use("/settings", settings);
 
 app.use("/users", userPage);
 app.use("/users", userRoute);
-
-app.post("/notes", notes);
 
 app.use("/admin", adminPage);
 app.use("/admin", adminRoute);

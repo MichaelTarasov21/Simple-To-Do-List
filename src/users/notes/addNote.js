@@ -1,6 +1,6 @@
 const mysql = require("mysql");
-const config = require("../config.js");
-const insertSQL = require("../insertSQL.js");
+const config = require("../../config.js");
+const insertSQL = require("../../insertSQL.js");
 const GraphemeSplitter = require("./grapheme-splitter.js");
 
 function valueIsSet(str = String) {
