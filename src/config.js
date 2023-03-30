@@ -28,7 +28,7 @@ if (process.env.HASHSTRENGTH) {
 	set_saltRounds = parseInt(process.env.HASHSTRENGTH);
 }
 
-set_cookieSecret = "";
+let set_cookieSecret = "";
 if (process.env.COOKIESECRET) {
 	set_cookieSecret = process.env.COOKIESECRET;
 }
