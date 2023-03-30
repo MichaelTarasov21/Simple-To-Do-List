@@ -105,3 +105,4 @@ app.use("/admin", adminPage);
 app.use("/admin", adminRoute);
 
 const job = schedule.scheduleJob("0 0 0 * * *", renewNotes);
+renewNotes();
