@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const favicon = require("serve-favicon");
 const session = require("express-session");
+const rateLimit = require("express-rate-limit");
 const lusca = require("lusca");
 const ejs = require("ejs");
 const schedule = require("node-schedule");
@@ -34,6 +35,20 @@ const sessionStoreOptions = {
 		tableName: "sessions",
 	},
 };
+
+const loginratelimit = rateLimit({
+	windowMs: config.ratelimitimer,
+	max: config.ratelimitlogins,
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+const ratelimit = rateLimit({
+	windowMs: config.ratelimitimer,
+	max: config.ratelimitcalls,
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
 const sessionStore = new MySQLStore(sessionStoreOptions);
 
@@ -88,20 +103,25 @@ app.get("/logout", logout);
 
 app.use("/login", loginPage);
 app.get("/login", renderLogin);
+app.use("/login", loginratelimit);
 app.post("/login", login);
 
 app.use("/public", publicRoute);
 
+app.use("/notes", ratelimit);
 app.use("/notes", userPage);
 app.get("/notes", renderNotes);
 
 app.use("/settings", userPage);
+app.use("/settings", ratelimit);
 app.use("/settings", settings);
 
 app.use("/users", userPage);
+app.use("/users", ratelimit)
 app.use("/users", userRoute);
 
 app.use("/admin", adminPage);
+app.use("/admin", ratelimit)
 app.use("/admin", adminRoute);
 
 const job = schedule.scheduleJob("0 0 0 * * *", renewNotes);
