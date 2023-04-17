@@ -52,6 +52,7 @@ const ratelimit = rateLimit({
 
 const sessionStore = new MySQLStore(sessionStoreOptions);
 
+app.set("trust proxy", 1); // trust reverse proxy
 app.use(helmet({ contentSecurityPolicy: false })); //Recommended server hardening
 
 app.use(
@@ -67,6 +68,7 @@ app.use(
 			maxAge: 1000 * 60 * 60,
 			sameSite: "strict",
 			name: "sessionId",
+			secure: true,
 		},
 	})
 );
@@ -117,11 +119,11 @@ app.use("/settings", ratelimit);
 app.use("/settings", settings);
 
 app.use("/users", userPage);
-app.use("/users", ratelimit)
+app.use("/users", ratelimit);
 app.use("/users", userRoute);
 
 app.use("/admin", adminPage);
-app.use("/admin", ratelimit)
+app.use("/admin", ratelimit);
 app.use("/admin", adminRoute);
 
 const job = schedule.scheduleJob("0 0 0 * * *", renewNotes);
