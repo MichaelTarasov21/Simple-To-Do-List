@@ -52,7 +52,6 @@ const ratelimit = rateLimit({
 
 const sessionStore = new MySQLStore(sessionStoreOptions);
 
-app.set("trust proxy", 1); // trust reverse proxy
 app.use(helmet({ contentSecurityPolicy: false })); //Recommended server hardening
 
 app.use(
@@ -68,7 +67,6 @@ app.use(
 			maxAge: 1000 * 60 * 60,
 			sameSite: "strict",
 			name: "sessionId",
-			secure: true,
 		},
 	})
 );
