@@ -7,7 +7,7 @@ let set_bind_address = "127.0.0.1";
 if (process.env.BINDADRESS) {
 	set_bind_address = process.env.BINDADRESS;
 }
-let set_sqlhost = "localhost";
+let set_sqlhost = "127.0.0.1";
 if (process.env.SQLHOST) {
 	set_sqlhost = process.env.SQLHOST;
 }
