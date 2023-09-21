@@ -14,3 +14,7 @@ function logout() {
 }
 
 document.getElementById("logout").addEventListener("click", logout);
+
+document.getElementById("general_settings").addEventListener("click", function () {
+	window.location.pathname = "/admin/general";
+});
