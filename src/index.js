@@ -92,7 +92,7 @@ app.use(
 app.set("view engine", ejs);
 
 app.listen(config.port, config.bindAdress, () => {
-	console.log(`Example app listening on port ${config.port} at ${config.bindAdress}!`);
+	console.log(`To-Do List listening on port ${config.port} at ${config.bindAdress}!`);
 });
 
 app.use(favicon(path.join(__dirname, "frontend", "favicon.ico")));
