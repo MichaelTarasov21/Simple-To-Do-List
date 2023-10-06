@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>To-do List</title>
+		<link rel="stylesheet" href="/users/styles/settings.css" />
+		<span id="csrf" csrf="<%=_csrf%>" style="display: none"> </span>
+	</head>
+	<body>
+		<a href="/notes"><span id="close">╳</span></a>
+		<div id="form">
+			<div class="setting">
+				<span class="label">Listening IP:</span>
+				<br />
+				<input id="bindaddress" value="<%=bindAdress%>" />
+			</div>
+			<div class="setting">
+				<span class="label">Listening Port:</span>
+				<br />
+				<input id="bindaddress" value="<%=port%>" />
+			</div>
+			<div class="setting">
+				<span class="label">Rate Limit Timer:</span>
+				<br />
+				<input id="bindaddress" value="<%=ratelimitimer%>" />
+			</div>
+			<div class="setting">
+				<span class="label">API Call Rate Limit</span>
+				<br />
+				<input id="bindaddress" value="<%=ratelimitcalls%>" />
+			</div>
+			<div class="setting">
+				<span class="label">Login Rate Limit</span>
+				<br />
+				<input id="bindaddress" value="<%=ratelimitlogins%>" />
+			</div>
+			<div id="submissions">
+				<button id="update">Save Changes</button>
+			</div>
+		</div>
+		<script src="/public/Scripts/post.js"></script>
+	</body>
+</html>
