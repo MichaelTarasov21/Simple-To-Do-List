@@ -17,13 +17,11 @@ const renewNotes = require("./renewnotes.js");
 const autoRoute = require("./routing/autorouter.js");
 const loginPage = require("./routing/login_page.js");
 const userPage = require("./routing/user_page.js");
-const adminPage = require("./routing/admin_page.js");
 const renderLogin = require("./public/renderLogin.js");
 const renderNotes = require("./users/renderNotes.js");
 const login = require("./public/login.js");
 const publicRoute = require("./public/router.js");
 const userRoute = require("./users/router.js");
-const adminRoute = require("./administration/adminRoutes.js");
 
 const sessionStoreOptions = {
 	host: config.sqlhost,
@@ -119,10 +117,6 @@ app.use("/settings", settings);
 app.use("/users", userPage);
 app.use("/users", ratelimit);
 app.use("/users", userRoute);
-
-app.use("/admin", adminPage);
-app.use("/admin", ratelimit);
-app.use("/admin", adminRoute);
 
 const job = schedule.scheduleJob("0 0 0 * * *", renewNotes);
 renewNotes();
