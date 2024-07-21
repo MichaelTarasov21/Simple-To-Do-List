@@ -9,10 +9,17 @@ const lusca = require("lusca");
 const ejs = require("ejs");
 const schedule = require("node-schedule");
 const MySQLStore = require("express-mysql-session")(session);
+const process = require("process");
 const config = require("./config.js");
+const emergencyreset = require("./emergencyresetpassword.js");
 const renewNotes = require("./renewnotes.js");
 const approutes = require("./routing/routemanager.js");
 
+if (process.argv[2] == "passwordreset") {
+	emergencyreset();
+	return;
+}
+console.log("here");
 const sessionStoreOptions = {
 	host: config.sqlhost,
 	user: config.sqluser,
