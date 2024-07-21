@@ -65,8 +65,9 @@ async function deleteAccount() {
 				abortDeletion();
 				break;
 			case "418":
-				// Left behind in case an admin gets to this page. Admins should be routed to the admin panel
-				alert("You are the last administrator. Make sure that there is at least one other admin account before deleting this one.");
+				alert(
+					"You are the last administrator. Make sure that there is at least one other admin account before deleting this one."
+				);
 				abortDeletion();
 				break;
 			case "500":
@@ -77,14 +78,8 @@ async function deleteAccount() {
 }
 
 function parseSettings() {
-	const email = document.getElementById("email").value;
-	const originalEmail = document.getElementById("email").getAttribute("value");
 	const oldpassword = document.getElementById("oldPassword").value;
 	const newpassword = document.getElementById("newPassword").value;
-
-	if (email !== originalEmail) {
-		setEmail();
-	}
 
 	if (oldpassword && newpassword) {
 		setPassword();

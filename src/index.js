@@ -5,23 +5,13 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const favicon = require("serve-favicon");
 const session = require("express-session");
-const rateLimit = require("express-rate-limit");
 const lusca = require("lusca");
 const ejs = require("ejs");
 const schedule = require("node-schedule");
 const MySQLStore = require("express-mysql-session")(session);
 const config = require("./config.js");
-const logout = require("./logout.js");
-const settings = require("./renderSettings.js");
 const renewNotes = require("./renewnotes.js");
-const autoRoute = require("./routing/autorouter.js");
-const loginPage = require("./routing/login_page.js");
-const userPage = require("./routing/user_page.js");
-const renderLogin = require("./public/renderLogin.js");
-const renderNotes = require("./users/renderNotes.js");
-const login = require("./public/login.js");
-const publicRoute = require("./public/router.js");
-const userRoute = require("./users/router.js");
+const approutes = require("./routing/routemanager.js");
 
 const sessionStoreOptions = {
 	host: config.sqlhost,
@@ -33,20 +23,6 @@ const sessionStoreOptions = {
 		tableName: "sessions",
 	},
 };
-
-const loginratelimit = rateLimit({
-	windowMs: config.ratelimitimer,
-	max: config.ratelimitlogins,
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-
-const ratelimit = rateLimit({
-	windowMs: config.ratelimitimer,
-	max: config.ratelimitcalls,
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
 
 const sessionStore = new MySQLStore(sessionStoreOptions);
 
@@ -94,29 +70,7 @@ app.listen(config.port, config.bindAdress, () => {
 });
 
 app.use(favicon(path.join(__dirname, "frontend", "favicon.ico")));
-
-app.get("/", autoRoute);
-
-app.get("/logout", logout);
-
-app.use("/login", loginPage);
-app.get("/login", renderLogin);
-app.use("/login", loginratelimit);
-app.post("/login", login);
-
-app.use("/public", publicRoute);
-
-app.use("/notes", ratelimit);
-app.use("/notes", userPage);
-app.get("/notes", renderNotes);
-
-app.use("/settings", userPage);
-app.use("/settings", ratelimit);
-app.use("/settings", settings);
-
-app.use("/users", userPage);
-app.use("/users", ratelimit);
-app.use("/users", userRoute);
+approutes(app);
 
 const job = schedule.scheduleJob("0 0 0 * * *", renewNotes);
 renewNotes();
